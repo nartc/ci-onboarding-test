@@ -1,0 +1,749 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json",
+  "title": "Nx Cloud CI definition",
+  "description": "Schema for an Nx Cloud CI definition file under .nx/pipelines or .nx/workflows. Launch-template-only files are not definition files and carry anchored fragment keys at the top level, so the root is only closed when the file declares triggers or on.",
+  "type": "object",
+  "properties": {
+    "triggers": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Named triggers that start the jobs. Same as on.",
+      "additionalProperties": {
+        "$ref": "#/$defs/trigger"
+      }
+    },
+    "on": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Named triggers that start the jobs. Same as triggers.",
+      "additionalProperties": {
+        "$ref": "#/$defs/trigger"
+      }
+    },
+    "jobs": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Jobs keyed by name. Same as workflows.",
+      "additionalProperties": {
+        "$ref": "#/$defs/job"
+      }
+    },
+    "workflows": {
+      "type": "object",
+      "minProperties": 1,
+      "description": "Jobs keyed by name. Same as jobs.",
+      "additionalProperties": {
+        "$ref": "#/$defs/job"
+      }
+    },
+    "launch-templates": {
+      "description": "Launch templates keyed by name, usable from runs-on. Or a path to a file that holds the templates at its root, or under a launch-templates key as in agents.yaml.",
+      "if": {
+        "type": "string"
+      },
+      "then": {
+        "$ref": "#/$defs/importPath"
+      },
+      "else": {
+        "type": "object",
+        "additionalProperties": {
+          "$ref": "#/$defs/launchTemplate"
+        }
+      }
+    },
+    "worker-templates": {
+      "description": "Named workers setups, usable by name from a job's workers, each a count, a count string or a map, as in a job's workers. At most 50 entries. Or a path to a file holding the entries as a map.",
+      "if": {
+        "type": "string"
+      },
+      "then": {
+        "$ref": "#/$defs/importPath"
+      },
+      "else": {
+        "type": "object",
+        "maxProperties": 50,
+        "propertyNames": {
+          "$ref": "#/$defs/workerTemplateName"
+        },
+        "additionalProperties": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/workersCount"
+            },
+            {
+              "$ref": "#/$defs/workersMap"
+            }
+          ]
+        }
+      }
+    },
+    "ultracache": {
+      "description": "Paths that Ultracache ignores when it records the reads and writes of a task. Or a path to a file with these keys at its root.",
+      "if": {
+        "type": "string"
+      },
+      "then": {
+        "$ref": "#/$defs/importPath"
+      },
+      "else": {
+        "$ref": "#/$defs/ultracache"
+      }
+    },
+    "self-healing": {
+      "$ref": "#/$defs/selfHealing"
+    },
+    "name": {
+      "type": "string",
+      "description": "Display name of the definition."
+    },
+    "env": {
+      "$ref": "#/$defs/envMap",
+      "description": "Environment variables for every job in the file."
+    },
+    "defaults": {
+      "$ref": "#/$defs/defaults",
+      "description": "Defaults applied to the steps of every job in the file."
+    }
+  },
+  "if": {
+    "anyOf": [
+      {
+        "required": ["triggers"]
+      },
+      {
+        "required": ["on"]
+      }
+    ]
+  },
+  "then": {
+    "propertyNames": {
+      "enum": [
+        "triggers",
+        "on",
+        "jobs",
+        "workflows",
+        "launch-templates",
+        "worker-templates",
+        "ultracache",
+        "self-healing",
+        "name",
+        "env",
+        "defaults"
+      ]
+    }
+  },
+  "$defs": {
+    "importPath": {
+      "type": "string",
+      "description": "Repo-root-relative path to a .yaml/.yml file, read at the run's commit; no '..'; the file cannot import again."
+    },
+    "patternList": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "ultracache": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Paths that Ultracache ignores when it records the reads and writes of a task.",
+      "properties": {
+        "ignore-reads": {
+          "$ref": "#/$defs/patternList"
+        },
+        "ignore-writes": {
+          "$ref": "#/$defs/patternList"
+        },
+        "exclude-reads": {
+          "$ref": "#/$defs/patternList",
+          "deprecated": true,
+          "description": "Deprecated: use ignore-reads."
+        },
+        "exclude-writes": {
+          "$ref": "#/$defs/patternList",
+          "deprecated": true,
+          "description": "Deprecated: use ignore-writes."
+        },
+        "task-exclusions": {
+          "type": "array",
+          "description": "Ignore patterns that apply only to the tasks matching project, target and configuration.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "project": {
+                "type": "string"
+              },
+              "target": {
+                "type": "string"
+              },
+              "configuration": {
+                "type": "string"
+              },
+              "ignore-reads": {
+                "$ref": "#/$defs/patternList"
+              },
+              "ignore-writes": {
+                "$ref": "#/$defs/patternList"
+              },
+              "exclude-reads": {
+                "$ref": "#/$defs/patternList",
+                "deprecated": true,
+                "description": "Deprecated: use ignore-reads."
+              },
+              "exclude-writes": {
+                "$ref": "#/$defs/patternList",
+                "deprecated": true,
+                "description": "Deprecated: use ignore-writes."
+              }
+            }
+          }
+        }
+      }
+    },
+    "selfHealing": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Which tasks self-healing fixes and which of its fixes are applied automatically.",
+      "properties": {
+        "fix-tasks-patterns": {
+          "type": "array",
+          "description": "Patterns of the tasks that self-healing fixes.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "auto-apply-patterns": {
+          "type": "array",
+          "description": "Patterns of the tasks whose fixes are applied automatically.",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "envMap": {
+      "type": "object",
+      "description": "Environment variable names to scalar values.",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null"]
+      }
+    },
+    "trigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["event"],
+      "description": "When a job is started: the event and optional ref or path filters.",
+      "properties": {
+        "event": {
+          "enum": ["PR", "PUSH", "MERGE_GROUP"],
+          "description": "Event that fires the trigger: PR, PUSH, or MERGE_GROUP (a GitHub merge queue asks for checks on a merge group). A MERGE_GROUP trigger matches its branch filters against the merge group's base branch and does not accept tags, tags-ignore, paths, paths-ignore or types."
+        },
+        "branches": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Branch patterns to run for. On a MERGE_GROUP trigger, matched against the merge group's base branch. In a file that also declares a MERGE_GROUP trigger, a PUSH trigger matches a merge queue branch (gh-readonly-queue/...) only through a pattern that starts with gh-readonly-queue/. Cannot be combined with branches-ignore.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "branches-ignore": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Branch patterns to skip. On a MERGE_GROUP trigger, matched against the merge group's base branch. In a file that also declares a MERGE_GROUP trigger, a PUSH trigger with branches-ignore never matches a merge queue branch (gh-readonly-queue/...). Cannot be combined with branches.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Tag patterns to run for. Not supported on a PR or MERGE_GROUP trigger.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "tags-ignore": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Tag patterns to skip. Not supported on a PR or MERGE_GROUP trigger.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "paths": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Changed-file path patterns to run for. Cannot be combined with paths-ignore. Not supported on a MERGE_GROUP trigger.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "paths-ignore": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Changed-file path patterns to skip. Cannot be combined with paths. Not supported on a MERGE_GROUP trigger.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        },
+        "types": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Pull request actions to run for. Only supported on a PR trigger.",
+          "items": {
+            "type": "string",
+            "pattern": "\\S"
+          }
+        }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Permissions of the job's VCS token.",
+      "properties": {
+        "repository-contents": {
+          "enum": ["read", "write"],
+          "description": "Access to the repository contents. Defaults to read."
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Defaults for steps.",
+      "properties": {
+        "run": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Defaults for run steps.",
+          "properties": {
+            "shell": {
+              "type": "string",
+              "description": "Shell that run steps use."
+            },
+            "working-directory": {
+              "type": "string",
+              "description": "Directory that run steps start in."
+            }
+          }
+        }
+      }
+    },
+    "workerTemplateName": {
+      "type": "string",
+      "pattern": "^[A-Za-z_][A-Za-z0-9_-]*$",
+      "description": "Name of a worker-templates entry."
+    },
+    "countString": {
+      "type": "string",
+      "pattern": "^\\s*(0|[0-9]+ [A-Za-z0-9_.-]+(\\s*;\\s*[0-9]+ [A-Za-z0-9_.-]+){0,19})\\s*$",
+      "description": "Worker counts per launch template, such as \"2 linux-medium; 1 linux-large\". At most 20 templates."
+    },
+    "workersCount": {
+      "description": "A number of workers on the job's own machine, or a count string naming launch templates.",
+      "oneOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "$ref": "#/$defs/countString"
+        }
+      ]
+    },
+    "sizedWorkersCount": {
+      "description": "A workers count, or an object with a count and the workload bound of this size.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/workersCount"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["count"],
+          "properties": {
+            "count": {
+              "$ref": "#/$defs/workersCount"
+            },
+            "workload": {
+              "type": "string",
+              "pattern": "^[1-9][0-9]?%$",
+              "description": "The upper bound of this size, as the remaining work's share of the workspace's stored timings: a whole percent from 1% to 99%. Defaults to 33% for small and 66% for medium. Bounds must increase. A share exactly at a bound picks the smaller size."
+            }
+          }
+        }
+      ]
+    },
+    "workersMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A workers setup: either a fixed workers count, or a count for each of small, medium and large.",
+      "properties": {
+        "workers": {
+          "$ref": "#/$defs/workersCount",
+          "description": "Fixed number of workers, started together with the main job. Cannot be combined with small, medium and large."
+        },
+        "small": {
+          "$ref": "#/$defs/sizedWorkersCount",
+          "description": "Workers for a small change. Defaults to zero when omitted."
+        },
+        "medium": {
+          "$ref": "#/$defs/sizedWorkersCount",
+          "description": "Workers for a medium change. Defaults to zero when omitted."
+        },
+        "large": {
+          "$ref": "#/$defs/workersCount",
+          "description": "Workers for a large change. Defaults to zero when omitted."
+        },
+        "main-job-worker": {
+          "description": "Runs a background worker on the main job by default on Nx Cloud CI, using detected capacity on VMs and containers. Set false to opt out, or provide cpu and memory scheduling allowances. External CI remains opt-in.",
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["cpu", "memory"],
+              "properties": {
+                "cpu": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "description": "Whole number of CPUs the worker may use."
+                },
+                "memory": {
+                  "type": "string",
+                  "maxLength": 32,
+                  "description": "Memory the worker may use, with a unit, for example 6GB."
+                }
+              }
+            }
+          ]
+        },
+        "assignment-rules": {
+          "type": "array",
+          "description": "Rules that assign tasks to launch templates.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "scheduling-constraints": {
+          "type": "array",
+          "description": "Constraints on how tasks are scheduled across workers.",
+          "items": {
+            "type": "object"
+          }
+        },
+        "stop-after": {
+          "type": "array",
+          "description": "Conditions after which the workers stop.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fail-after": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of failed tasks after which the run fails."
+        }
+      },
+      "oneOf": [
+        {
+          "required": ["workers"],
+          "not": {
+            "anyOf": [
+              { "required": ["small"] },
+              { "required": ["medium"] },
+              { "required": ["large"] }
+            ]
+          }
+        },
+        {
+          "not": {
+            "required": ["workers"]
+          }
+        }
+      ]
+    },
+    "job": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One job: where it runs and the steps it executes.",
+      "not": {
+        "required": ["distribute", "workers"]
+      },
+      "oneOf": [
+        {
+          "required": ["runs-on"],
+          "not": {
+            "anyOf": [
+              { "required": ["resource-class"] },
+              { "required": ["image"] },
+              { "required": ["init-steps"] }
+            ]
+          }
+        },
+        {
+          "required": ["resource-class", "image"],
+          "not": {
+            "required": ["runs-on"]
+          }
+        }
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the job."
+        },
+        "runs-on": {
+          "type": "string",
+          "description": "Launch template the job runs on, or an ubuntu-* runner label which maps to the default Linux launch template."
+        },
+        "distribute": {
+          "type": "boolean",
+          "description": "Deprecated: use workers to configure or disable distribution. Explicit true uses the legacy ci-config.yaml worker setup. Cannot be combined with `workers`."
+        },
+        "workers": {
+          "description": "Workers that run this job's tasks: a number, a count string such as \"2 linux-medium; 1 linux-large\", the name of a worker-templates entry, or a map. Omit to use only the main-job worker. Set false to disable workers and distribution.",
+          "oneOf": [
+            {
+              "const": false
+            },
+            {
+              "$ref": "#/$defs/workersCount"
+            },
+            {
+              "$ref": "#/$defs/workerTemplateName"
+            },
+            {
+              "$ref": "#/$defs/workersMap"
+            }
+          ]
+        },
+        "resource-class": {
+          "type": "string",
+          "description": "Resource class of the job's machine. Use with image instead of runs-on."
+        },
+        "image": {
+          "type": "string",
+          "description": "Container image of the job's machine. Use with resource-class instead of runs-on."
+        },
+        "init-steps": {
+          "type": "array",
+          "description": "Steps run once when the job's machine starts.",
+          "items": {
+            "$ref": "#/$defs/step"
+          }
+        },
+        "steps": {
+          "type": "array",
+          "description": "Steps the job runs in order.",
+          "items": {
+            "$ref": "#/$defs/step"
+          }
+        },
+        "permissions": {
+          "$ref": "#/$defs/permissions",
+          "description": "Permissions of the VCS token used by this job."
+        },
+        "env": {
+          "$ref": "#/$defs/envMap",
+          "description": "Environment variables for every step of the job."
+        },
+        "if": {
+          "type": "string",
+          "description": "Condition that must hold for the job to run."
+        },
+        "timeout-minutes": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "maximum": 60,
+          "description": "Minutes before the job is stopped. At most 60, the platform workflow time limit."
+        },
+        "defaults": {
+          "$ref": "#/$defs/defaults",
+          "description": "Defaults applied to the steps of this job."
+        },
+        "needs": {
+          "description": "Job or jobs that must finish before this job starts.",
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "pattern": "\\S"
+            },
+            {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "launchTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Machine configuration for jobs or agents that use this template.",
+      "properties": {
+        "env": {
+          "$ref": "#/$defs/envMap",
+          "description": "Environment variables for the machine."
+        },
+        "resource-class": {
+          "type": "string",
+          "description": "Resource class of the machine."
+        },
+        "image": {
+          "type": "string",
+          "description": "Container image of the machine."
+        },
+        "init-steps": {
+          "type": "array",
+          "description": "Steps run once when the machine starts.",
+          "items": {
+            "$ref": "#/$defs/step"
+          }
+        },
+        "enable-dind-with-privileged-containers": {
+          "type": "boolean",
+          "description": "Run Docker in Docker with privileged containers."
+        },
+        "no-output-timeout": {
+          "type": "string",
+          "description": "Time without command output before the command is stopped, such as 10m or 1h. 0 disables it."
+        },
+        "agent-details": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Routing constraints for agents provisioned from this template.",
+          "properties": {
+            "private-networking": {
+              "type": "boolean",
+              "description": "Provision agents with private networking."
+            },
+            "region": {
+              "type": "string",
+              "description": "Region to provision agents in."
+            }
+          }
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "One step. Use uses for a step template or run for a shell script; a group step has steps instead.",
+      "not": {
+        "anyOf": [
+          {
+            "required": ["uses", "run"]
+          },
+          {
+            "required": ["uses", "script"]
+          }
+        ]
+      },
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Display name of the step."
+        },
+        "id": {
+          "type": "string",
+          "description": "Identifier other steps use in steps.<id> expressions."
+        },
+        "step-id": {
+          "type": "string",
+          "description": "Identifier other steps use in steps.<id> expressions."
+        },
+        "uses": {
+          "type": "string",
+          "description": "Step template to run."
+        },
+        "run": {
+          "type": "string",
+          "description": "Shell script to run. Same as script."
+        },
+        "script": {
+          "type": "string",
+          "description": "Shell script to run. Same as run."
+        },
+        "shell": {
+          "type": "string",
+          "description": "Shell that runs the script."
+        },
+        "working-directory": {
+          "type": "string",
+          "description": "Directory the script starts in."
+        },
+        "with": {
+          "$ref": "#/$defs/envMap",
+          "description": "Inputs passed to the step template. Same as inputs."
+        },
+        "inputs": {
+          "$ref": "#/$defs/envMap",
+          "description": "Inputs passed to the step template. Same as with."
+        },
+        "env": {
+          "$ref": "#/$defs/envMap",
+          "description": "Environment variables for the step."
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Command to execute."
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Arguments of the command."
+        },
+        "parallel": {
+          "type": "boolean",
+          "description": "Run the steps of this group in parallel."
+        },
+        "group-name": {
+          "type": "string",
+          "description": "Display name of the step group."
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/step"
+          },
+          "description": "Steps of a group."
+        },
+        "if": {
+          "type": "string",
+          "description": "Condition that must hold for the step to run."
+        },
+        "continue-on-error": {
+          "type": "boolean",
+          "description": "Keep going when this step fails."
+        },
+        "timeout-minutes": {
+          "type": "number",
+          "description": "Minutes before the step is stopped."
+        }
+      }
+    }
+  }
+}

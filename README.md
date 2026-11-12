@@ -157,15 +157,26 @@ Default size: `sharedLayers × sharedPerLayer + domains × (4 × projectsPerLaye
 
 `generate:check` is intentionally **not** a CI requirement, so legitimate source edits for affected/cache experiments are allowed. `graph:check` still enforces the configured project topology.
 
+## Bounded CI chaos lab
+
+[The chaos lab](docs/CHAOS-LAB.md) exercises Nx Cloud CI itself: mixed worker pools, dynamic sizing, job dependencies, parallel steps, expressions, controlled failures, and timeouts. It runs only for PRs targeting `main`, after the regular Nx check in the same pipeline. The eight-machine scheduling cap includes a reserved slot for the separate GitHub Actions runner; branch pushes do not launch the lab.
+
+```sh
+pnpm chaos:check                 # Offline schema and safety checks
+pnpm chaos:schema                # Fifteen local schema boundary cases
+NX_NO_CLOUD=true pnpm chaos:plan  # Export the two experimental task graphs
+```
+
 ## CI
 
 ### Nx Cloud CI
 
 `.nx/pipelines/ci.yaml` runs on pull requests to `main` and pushes to `main`:
 
-- Uses a `linux-medium-js` main job plus **three `linux-large-js` workers**. The main-job worker also executes tasks: four workers total.
+- The regular `main` job uses `linux-medium-js` plus **three `linux-large-js` workers**: four machines total.
 - Runs `nx affected -t verify,e2e`, covering all seven standard targets plus the integration targets through the existing task graph (up to 3,384 tasks).
-- Uses Nx Cloud's supplied base/head commits and managed worker lifecycle. No manual task sharding or additional `--parallel` override is needed.
+- Uses Nx Cloud's supplied base/head commits and managed worker lifecycle.
+- On PRs only, the chaos jobs follow `main` in sequence; on pushes to `main`, only the regular check runs. Experimental worker counts are defined in `.nx/pipelines/chaos-workers.yaml`.
 
 The workspace is connected through `nxCloudId` in `nx.json`. Worker counts can be changed in the pipeline's `workers` setting; additional workers consume additional cloud compute. Nx Cloud checks out the repository and installs dependencies through the built-in JS launch templates.
 

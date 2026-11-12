@@ -1,0 +1,16 @@
+{
+  "name": "media-data-01",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "media-util-01",
+    "media-util-02",
+    "media-util-03",
+    "media-util-04",
+    "content-util-01",
+    "content-util-02"
+  ]
+}

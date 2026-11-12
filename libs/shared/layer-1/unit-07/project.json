@@ -1,0 +1,55 @@
+{
+  "name": "shared-l1-07",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/shared/layer-1/unit-07/src",
+  "tags": [
+    "scope:shared",
+    "layer:shared-1",
+    "fixture:generated"
+  ],
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs codegen libs/shared/layer-1/unit-07"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs lint libs/shared/layer-1/unit-07"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs typecheck libs/shared/layer-1/unit-07"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs build libs/shared/layer-1/unit-07"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs test libs/shared/layer-1/unit-07"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs package libs/shared/layer-1/unit-07"
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs verify libs/shared/layer-1/unit-07"
+      }
+    }
+  }
+}

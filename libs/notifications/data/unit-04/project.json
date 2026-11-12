@@ -1,0 +1,55 @@
+{
+  "name": "notifications-data-04",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/notifications/data/unit-04/src",
+  "tags": [
+    "scope:notifications",
+    "layer:data",
+    "fixture:generated"
+  ],
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs codegen libs/notifications/data/unit-04"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs lint libs/notifications/data/unit-04"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs typecheck libs/notifications/data/unit-04"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs build libs/notifications/data/unit-04"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs test libs/notifications/data/unit-04"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs package libs/notifications/data/unit-04"
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs verify libs/notifications/data/unit-04"
+      }
+    }
+  }
+}

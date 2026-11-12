@@ -1,0 +1,16 @@
+{
+  "name": "support-ui-01",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "support-feature-01",
+    "support-feature-02",
+    "support-feature-03",
+    "support-feature-04",
+    "reporting-feature-01",
+    "reporting-feature-02"
+  ]
+}

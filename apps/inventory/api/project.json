@@ -1,0 +1,55 @@
+{
+  "name": "inventory-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/inventory/api/src",
+  "tags": [
+    "scope:inventory",
+    "layer:api",
+    "fixture:generated"
+  ],
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs codegen apps/inventory/api"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs lint apps/inventory/api"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs typecheck apps/inventory/api"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs build apps/inventory/api"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs test apps/inventory/api"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs package apps/inventory/api"
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs verify apps/inventory/api"
+      }
+    }
+  }
+}

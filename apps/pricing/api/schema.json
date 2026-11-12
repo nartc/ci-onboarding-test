@@ -1,0 +1,18 @@
+{
+  "name": "pricing-api",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "pricing-feature-01",
+    "pricing-feature-02",
+    "pricing-feature-03",
+    "pricing-feature-04",
+    "pricing-data-01",
+    "pricing-data-02",
+    "pricing-data-03",
+    "pricing-data-04"
+  ]
+}

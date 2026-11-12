@@ -1,0 +1,20 @@
+{
+  "name": "pricing-portal",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "pricing-feature-01",
+    "pricing-feature-02",
+    "pricing-feature-03",
+    "pricing-feature-04",
+    "pricing-ui-01",
+    "pricing-ui-02",
+    "pricing-ui-03",
+    "pricing-ui-04",
+    "recommendations-ui-01",
+    "recommendations-ui-02"
+  ]
+}

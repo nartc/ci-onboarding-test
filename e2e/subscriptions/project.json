@@ -1,0 +1,61 @@
+{
+  "name": "subscriptions-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "e2e/subscriptions/src",
+  "tags": [
+    "scope:subscriptions",
+    "layer:e2e",
+    "fixture:generated"
+  ],
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs codegen e2e/subscriptions"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs lint e2e/subscriptions"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs typecheck e2e/subscriptions"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs build e2e/subscriptions"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs test e2e/subscriptions"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs package e2e/subscriptions"
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs verify e2e/subscriptions"
+      }
+    },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs e2e e2e/subscriptions"
+      }
+    }
+  }
+}

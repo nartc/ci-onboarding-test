@@ -1,0 +1,61 @@
+{
+  "name": "marketing-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "e2e/marketing/src",
+  "tags": [
+    "scope:marketing",
+    "layer:e2e",
+    "fixture:generated"
+  ],
+  "targets": {
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs codegen e2e/marketing"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs lint e2e/marketing"
+      }
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs typecheck e2e/marketing"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs build e2e/marketing"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs test e2e/marketing"
+      }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs package e2e/marketing"
+      }
+    },
+    "verify": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs verify e2e/marketing"
+      }
+    },
+    "e2e": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/task.mjs e2e e2e/marketing"
+      }
+    }
+  }
+}

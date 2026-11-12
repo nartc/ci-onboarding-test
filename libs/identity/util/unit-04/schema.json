@@ -1,0 +1,10 @@
+{
+  "name": "identity-util-04",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02"
+  ]
+}

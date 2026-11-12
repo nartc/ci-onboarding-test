@@ -1,0 +1,10 @@
+{
+  "name": "shared-l2-02",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l1-02",
+    "shared-l1-03",
+    "shared-l1-05",
+    "shared-l1-07"
+  ]
+}

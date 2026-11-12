@@ -1,0 +1,9 @@
+{
+  "name": "shipping-e2e",
+  "ownWeight": 4,
+  "dependencies": [
+    "shipping-api",
+    "shipping-portal",
+    "inventory-portal"
+  ]
+}

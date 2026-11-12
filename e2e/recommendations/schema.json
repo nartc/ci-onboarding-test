@@ -1,0 +1,9 @@
+{
+  "name": "recommendations-e2e",
+  "ownWeight": 14,
+  "dependencies": [
+    "recommendations-api",
+    "recommendations-portal",
+    "media-portal"
+  ]
+}

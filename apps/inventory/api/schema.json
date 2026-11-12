@@ -1,0 +1,18 @@
+{
+  "name": "inventory-api",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "inventory-feature-01",
+    "inventory-feature-02",
+    "inventory-feature-03",
+    "inventory-feature-04",
+    "inventory-data-01",
+    "inventory-data-02",
+    "inventory-data-03",
+    "inventory-data-04"
+  ]
+}

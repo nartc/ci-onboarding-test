@@ -1,0 +1,9 @@
+{
+  "name": "payments-e2e",
+  "ownWeight": 5,
+  "dependencies": [
+    "payments-api",
+    "payments-portal",
+    "shipping-portal"
+  ]
+}

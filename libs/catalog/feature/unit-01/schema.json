@@ -1,0 +1,16 @@
+{
+  "name": "catalog-feature-01",
+  "ownWeight": 8,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "catalog-data-01",
+    "catalog-data-02",
+    "catalog-data-03",
+    "catalog-data-04",
+    "billing-data-01",
+    "billing-data-02"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "fulfillment-ui-04",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "fulfillment-feature-01",
+    "fulfillment-feature-02",
+    "fulfillment-feature-03",
+    "fulfillment-feature-04",
+    "subscriptions-feature-04",
+    "subscriptions-feature-01"
+  ]
+}

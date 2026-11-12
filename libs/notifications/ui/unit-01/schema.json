@@ -1,0 +1,16 @@
+{
+  "name": "notifications-ui-01",
+  "ownWeight": 5,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "notifications-feature-01",
+    "notifications-feature-02",
+    "notifications-feature-03",
+    "notifications-feature-04",
+    "payments-feature-01",
+    "payments-feature-02"
+  ]
+}

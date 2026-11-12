@@ -1,0 +1,9 @@
+{
+  "name": "support-e2e",
+  "ownWeight": 10,
+  "dependencies": [
+    "support-api",
+    "support-portal",
+    "reporting-portal"
+  ]
+}

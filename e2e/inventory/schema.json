@@ -1,0 +1,9 @@
+{
+  "name": "inventory-e2e",
+  "ownWeight": 3,
+  "dependencies": [
+    "inventory-api",
+    "inventory-portal",
+    "checkout-portal"
+  ]
+}

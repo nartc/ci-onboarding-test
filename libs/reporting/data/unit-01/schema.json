@@ -1,0 +1,16 @@
+{
+  "name": "reporting-data-01",
+  "ownWeight": 12,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "reporting-util-01",
+    "reporting-util-02",
+    "reporting-util-03",
+    "reporting-util-04",
+    "analytics-util-01",
+    "analytics-util-02"
+  ]
+}

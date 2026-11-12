@@ -1,0 +1,20 @@
+{
+  "name": "compliance-portal",
+  "ownWeight": 10,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "compliance-feature-01",
+    "compliance-feature-02",
+    "compliance-feature-03",
+    "compliance-feature-04",
+    "compliance-ui-01",
+    "compliance-ui-02",
+    "compliance-ui-03",
+    "compliance-ui-04",
+    "partners-ui-01",
+    "partners-ui-02"
+  ]
+}

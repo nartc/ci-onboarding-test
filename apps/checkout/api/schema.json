@@ -1,0 +1,18 @@
+{
+  "name": "checkout-api",
+  "ownWeight": 9,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "checkout-feature-01",
+    "checkout-feature-02",
+    "checkout-feature-03",
+    "checkout-feature-04",
+    "checkout-data-01",
+    "checkout-data-02",
+    "checkout-data-03",
+    "checkout-data-04"
+  ]
+}

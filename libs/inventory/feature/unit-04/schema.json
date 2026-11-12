@@ -1,0 +1,16 @@
+{
+  "name": "inventory-feature-04",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "inventory-data-01",
+    "inventory-data-02",
+    "inventory-data-03",
+    "inventory-data-04",
+    "checkout-data-04",
+    "checkout-data-01"
+  ]
+}

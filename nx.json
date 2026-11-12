@@ -1,0 +1,126 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "parallel": 6,
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/tests/**/*"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/pnpm-lock.yaml",
+      "{workspaceRoot}/tsconfig.base.json",
+      "{workspaceRoot}/eslint.config.mjs",
+      "{workspaceRoot}/tools/task.mjs",
+      "{workspaceRoot}/pnpm-workspace.yaml",
+      "{workspaceRoot}/.node-version",
+      {
+        "runtime": "node --version"
+      }
+    ]
+  },
+  "targetDefaults": {
+    "codegen": {
+      "cache": true,
+      "inputs": [
+        "production"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/codegen/{projectName}"
+      ]
+    },
+    "lint": {
+      "cache": true,
+      "inputs": [
+        "default"
+      ]
+    },
+    "typecheck": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": [
+        "^build",
+        "codegen",
+        "typecheck"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/build/{projectName}"
+      ]
+    },
+    "test": {
+      "cache": true,
+      "dependsOn": [
+        "build"
+      ],
+      "inputs": [
+        "default",
+        "^production"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/test/{projectName}"
+      ]
+    },
+    "package": {
+      "cache": true,
+      "dependsOn": [
+        "build",
+        "test",
+        "lint"
+      ],
+      "inputs": [
+        "default",
+        "^production"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/packages/{projectName}"
+      ]
+    },
+    "verify": {
+      "cache": true,
+      "dependsOn": [
+        "package"
+      ],
+      "inputs": [
+        "default",
+        "^production"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/verify/{projectName}"
+      ]
+    },
+    "e2e": {
+      "cache": true,
+      "dependsOn": [
+        "build",
+        "^package"
+      ],
+      "inputs": [
+        "default",
+        "^default"
+      ],
+      "outputs": [
+        "{workspaceRoot}/dist/e2e/{projectName}"
+      ]
+    }
+  },
+  "analytics": false
+}

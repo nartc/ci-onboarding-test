@@ -1,0 +1,16 @@
+{
+  "name": "subscriptions-feature-03",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "subscriptions-data-01",
+    "subscriptions-data-02",
+    "subscriptions-data-03",
+    "subscriptions-data-04",
+    "pricing-data-03",
+    "pricing-data-04"
+  ]
+}

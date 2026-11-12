@@ -1,0 +1,16 @@
+{
+  "name": "payments-ui-03",
+  "ownWeight": 3,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "payments-feature-01",
+    "payments-feature-02",
+    "payments-feature-03",
+    "payments-feature-04",
+    "shipping-feature-03",
+    "shipping-feature-04"
+  ]
+}

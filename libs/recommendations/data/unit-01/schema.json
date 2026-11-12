@@ -1,0 +1,16 @@
+{
+  "name": "recommendations-data-01",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "recommendations-util-01",
+    "recommendations-util-02",
+    "recommendations-util-03",
+    "recommendations-util-04",
+    "media-util-01",
+    "media-util-02"
+  ]
+}

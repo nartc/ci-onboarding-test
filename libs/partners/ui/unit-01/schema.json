@@ -1,0 +1,16 @@
+{
+  "name": "partners-ui-01",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "partners-feature-01",
+    "partners-feature-02",
+    "partners-feature-03",
+    "partners-feature-04",
+    "fulfillment-feature-01",
+    "fulfillment-feature-02"
+  ]
+}

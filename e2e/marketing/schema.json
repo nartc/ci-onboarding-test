@@ -1,0 +1,9 @@
+{
+  "name": "marketing-e2e",
+  "ownWeight": 11,
+  "dependencies": [
+    "marketing-api",
+    "marketing-portal",
+    "support-portal"
+  ]
+}

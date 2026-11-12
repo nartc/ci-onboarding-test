@@ -1,0 +1,16 @@
+{
+  "name": "partners-data-03",
+  "ownWeight": 16,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "partners-util-01",
+    "partners-util-02",
+    "partners-util-03",
+    "partners-util-04",
+    "fulfillment-util-03",
+    "fulfillment-util-04"
+  ]
+}

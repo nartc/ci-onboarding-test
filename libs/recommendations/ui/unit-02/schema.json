@@ -1,0 +1,16 @@
+{
+  "name": "recommendations-ui-02",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "recommendations-feature-01",
+    "recommendations-feature-02",
+    "recommendations-feature-03",
+    "recommendations-feature-04",
+    "media-feature-02",
+    "media-feature-03"
+  ]
+}

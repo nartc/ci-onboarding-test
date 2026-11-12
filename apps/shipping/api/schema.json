@@ -1,0 +1,18 @@
+{
+  "name": "shipping-api",
+  "ownWeight": 13,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shipping-feature-01",
+    "shipping-feature-02",
+    "shipping-feature-03",
+    "shipping-feature-04",
+    "shipping-data-01",
+    "shipping-data-02",
+    "shipping-data-03",
+    "shipping-data-04"
+  ]
+}

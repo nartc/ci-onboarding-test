@@ -1,0 +1,16 @@
+{
+  "name": "search-data-03",
+  "ownWeight": 6,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "search-util-01",
+    "search-util-02",
+    "search-util-03",
+    "search-util-04",
+    "notifications-util-03",
+    "notifications-util-04"
+  ]
+}

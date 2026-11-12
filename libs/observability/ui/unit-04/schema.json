@@ -1,0 +1,16 @@
+{
+  "name": "observability-ui-04",
+  "ownWeight": 13,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "observability-feature-01",
+    "observability-feature-02",
+    "observability-feature-03",
+    "observability-feature-04",
+    "compliance-feature-04",
+    "compliance-feature-01"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "identity-feature-03",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "identity-data-01",
+    "identity-data-02",
+    "identity-data-03",
+    "identity-data-04",
+    "commerce-data-03",
+    "commerce-data-04"
+  ]
+}

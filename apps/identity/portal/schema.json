@@ -1,0 +1,20 @@
+{
+  "name": "identity-portal",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "identity-feature-01",
+    "identity-feature-02",
+    "identity-feature-03",
+    "identity-feature-04",
+    "identity-ui-01",
+    "identity-ui-02",
+    "identity-ui-03",
+    "identity-ui-04",
+    "commerce-ui-01",
+    "commerce-ui-02"
+  ]
+}

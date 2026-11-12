@@ -1,0 +1,16 @@
+{
+  "name": "support-data-03",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "support-util-01",
+    "support-util-02",
+    "support-util-03",
+    "support-util-04",
+    "reporting-util-03",
+    "reporting-util-04"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "commerce-e2e",
+  "ownWeight": 15,
+  "dependencies": [
+    "commerce-api",
+    "commerce-portal",
+    "experimentation-portal"
+  ]
+}

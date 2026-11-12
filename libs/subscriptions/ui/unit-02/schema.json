@@ -1,0 +1,16 @@
+{
+  "name": "subscriptions-ui-02",
+  "ownWeight": 12,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "subscriptions-feature-01",
+    "subscriptions-feature-02",
+    "subscriptions-feature-03",
+    "subscriptions-feature-04",
+    "pricing-feature-02",
+    "pricing-feature-03"
+  ]
+}

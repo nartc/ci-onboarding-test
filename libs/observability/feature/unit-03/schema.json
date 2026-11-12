@@ -1,0 +1,16 @@
+{
+  "name": "observability-feature-03",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "observability-data-01",
+    "observability-data-02",
+    "observability-data-03",
+    "observability-data-04",
+    "compliance-data-03",
+    "compliance-data-04"
+  ]
+}

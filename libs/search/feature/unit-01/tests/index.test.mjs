@@ -1,0 +1,23 @@
+// Generated, deterministic fixtures; these assertions really execute the compiled bundle.
+import assert from 'node:assert/strict';
+import { test } from 'node:test';
+import { evaluate, weight, buildMetadata } from '../../../../../dist/build/search-feature-01/index.js';
+
+test('search-feature-01: dependency-derived value', () => {
+  assert.equal(weight, 22327);
+  assert.deepEqual(evaluate(7), { project: 'search-feature-01', value: 22334, dependencies: ["shared-l2-02","shared-l2-03","shared-l2-05","shared-l2-07","search-data-01","search-data-02","search-data-03","search-data-04","notifications-data-01","notifications-data-02"] });
+});
+
+test('search-feature-01: default and negative seeds', () => {
+  assert.equal(evaluate().value, 22328);
+  assert.equal(evaluate(-7).value, 22320);
+});
+
+test('search-feature-01: rejects invalid input', () => {
+  for (const seed of [NaN, Infinity, -Infinity]) assert.throws(() => evaluate(seed), TypeError);
+});
+
+test('search-feature-01: generated build metadata', () => {
+  assert.equal(buildMetadata.name, 'search-feature-01');
+  assert.deepEqual(buildMetadata.dependencies, ["shared-l2-02","shared-l2-03","shared-l2-05","shared-l2-07","search-data-01","search-data-02","search-data-03","search-data-04","notifications-data-01","notifications-data-02"]);
+});

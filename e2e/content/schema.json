@@ -1,0 +1,9 @@
+{
+  "name": "content-e2e",
+  "ownWeight": 12,
+  "dependencies": [
+    "content-api",
+    "content-portal",
+    "marketing-portal"
+  ]
+}

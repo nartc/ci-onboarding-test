@@ -1,0 +1,10 @@
+{
+  "name": "pricing-util-01",
+  "ownWeight": 8,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07"
+  ]
+}

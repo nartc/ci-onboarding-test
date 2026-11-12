@@ -1,0 +1,16 @@
+{
+  "name": "notifications-data-03",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-03",
+    "shared-l2-04",
+    "shared-l2-06",
+    "shared-l2-08",
+    "notifications-util-01",
+    "notifications-util-02",
+    "notifications-util-03",
+    "notifications-util-04",
+    "payments-util-03",
+    "payments-util-04"
+  ]
+}

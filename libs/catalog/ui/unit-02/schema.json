@@ -1,0 +1,16 @@
+{
+  "name": "catalog-ui-02",
+  "ownWeight": 3,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "catalog-feature-01",
+    "catalog-feature-02",
+    "catalog-feature-03",
+    "catalog-feature-04",
+    "billing-feature-02",
+    "billing-feature-03"
+  ]
+}

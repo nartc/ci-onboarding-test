@@ -1,0 +1,16 @@
+{
+  "name": "content-ui-04",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "content-feature-01",
+    "content-feature-02",
+    "content-feature-03",
+    "content-feature-04",
+    "marketing-feature-04",
+    "marketing-feature-01"
+  ]
+}

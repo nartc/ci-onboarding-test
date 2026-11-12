@@ -1,0 +1,18 @@
+{
+  "name": "analytics-api",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-03",
+    "shared-l2-04",
+    "shared-l2-06",
+    "shared-l2-08",
+    "analytics-feature-01",
+    "analytics-feature-02",
+    "analytics-feature-03",
+    "analytics-feature-04",
+    "analytics-data-01",
+    "analytics-data-02",
+    "analytics-data-03",
+    "analytics-data-04"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "subscriptions-e2e",
+  "ownWeight": 16,
+  "dependencies": [
+    "subscriptions-api",
+    "subscriptions-portal",
+    "pricing-portal"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "identity-ui-04",
+  "ownWeight": 14,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "identity-feature-01",
+    "identity-feature-02",
+    "identity-feature-03",
+    "identity-feature-04",
+    "commerce-feature-04",
+    "commerce-feature-01"
+  ]
+}

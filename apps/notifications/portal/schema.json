@@ -1,0 +1,20 @@
+{
+  "name": "notifications-portal",
+  "ownWeight": 1,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "notifications-feature-01",
+    "notifications-feature-02",
+    "notifications-feature-03",
+    "notifications-feature-04",
+    "notifications-ui-01",
+    "notifications-ui-02",
+    "notifications-ui-03",
+    "notifications-ui-04",
+    "payments-ui-01",
+    "payments-ui-02"
+  ]
+}

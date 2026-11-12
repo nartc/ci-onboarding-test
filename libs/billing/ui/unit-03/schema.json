@@ -1,0 +1,16 @@
+{
+  "name": "billing-ui-03",
+  "ownWeight": 17,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "billing-feature-01",
+    "billing-feature-02",
+    "billing-feature-03",
+    "billing-feature-04",
+    "identity-feature-03",
+    "identity-feature-04"
+  ]
+}

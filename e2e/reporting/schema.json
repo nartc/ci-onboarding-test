@@ -1,0 +1,9 @@
+{
+  "name": "reporting-e2e",
+  "ownWeight": 9,
+  "dependencies": [
+    "reporting-api",
+    "reporting-portal",
+    "analytics-portal"
+  ]
+}

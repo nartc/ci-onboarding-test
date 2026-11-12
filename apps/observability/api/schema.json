@@ -1,0 +1,18 @@
+{
+  "name": "observability-api",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "observability-feature-01",
+    "observability-feature-02",
+    "observability-feature-03",
+    "observability-feature-04",
+    "observability-data-01",
+    "observability-data-02",
+    "observability-data-03",
+    "observability-data-04"
+  ]
+}

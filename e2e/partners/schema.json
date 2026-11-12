@@ -1,0 +1,9 @@
+{
+  "name": "partners-e2e",
+  "ownWeight": 1,
+  "dependencies": [
+    "partners-api",
+    "partners-portal",
+    "fulfillment-portal"
+  ]
+}

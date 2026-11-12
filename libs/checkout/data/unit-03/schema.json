@@ -1,0 +1,16 @@
+{
+  "name": "checkout-data-03",
+  "ownWeight": 3,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "checkout-util-01",
+    "checkout-util-02",
+    "checkout-util-03",
+    "checkout-util-04",
+    "catalog-util-03",
+    "catalog-util-04"
+  ]
+}

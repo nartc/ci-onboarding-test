@@ -1,0 +1,16 @@
+{
+  "name": "experimentation-ui-02",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "experimentation-feature-01",
+    "experimentation-feature-02",
+    "experimentation-feature-03",
+    "experimentation-feature-04",
+    "observability-feature-02",
+    "observability-feature-03"
+  ]
+}

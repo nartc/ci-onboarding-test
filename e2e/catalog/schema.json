@@ -1,0 +1,9 @@
+{
+  "name": "catalog-e2e",
+  "ownWeight": 1,
+  "dependencies": [
+    "catalog-api",
+    "catalog-portal",
+    "billing-portal"
+  ]
+}

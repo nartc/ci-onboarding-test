@@ -1,0 +1,16 @@
+{
+  "name": "marketing-ui-03",
+  "ownWeight": 10,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "marketing-feature-01",
+    "marketing-feature-02",
+    "marketing-feature-03",
+    "marketing-feature-04",
+    "support-feature-03",
+    "support-feature-04"
+  ]
+}

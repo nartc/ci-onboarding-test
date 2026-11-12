@@ -1,0 +1,18 @@
+{
+  "name": "marketing-api",
+  "ownWeight": 10,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "marketing-feature-01",
+    "marketing-feature-02",
+    "marketing-feature-03",
+    "marketing-feature-04",
+    "marketing-data-01",
+    "marketing-data-02",
+    "marketing-data-03",
+    "marketing-data-04"
+  ]
+}

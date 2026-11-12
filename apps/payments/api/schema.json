@@ -1,0 +1,18 @@
+{
+  "name": "payments-api",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "payments-feature-01",
+    "payments-feature-02",
+    "payments-feature-03",
+    "payments-feature-04",
+    "payments-data-01",
+    "payments-data-02",
+    "payments-data-03",
+    "payments-data-04"
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "name": "recommendations-portal",
+  "ownWeight": 17,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "recommendations-feature-01",
+    "recommendations-feature-02",
+    "recommendations-feature-03",
+    "recommendations-feature-04",
+    "recommendations-ui-01",
+    "recommendations-ui-02",
+    "recommendations-ui-03",
+    "recommendations-ui-04",
+    "media-ui-01",
+    "media-ui-02"
+  ]
+}

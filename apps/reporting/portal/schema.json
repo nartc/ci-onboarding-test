@@ -1,0 +1,20 @@
+{
+  "name": "reporting-portal",
+  "ownWeight": 7,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "reporting-feature-01",
+    "reporting-feature-02",
+    "reporting-feature-03",
+    "reporting-feature-04",
+    "reporting-ui-01",
+    "reporting-ui-02",
+    "reporting-ui-03",
+    "reporting-ui-04",
+    "analytics-ui-01",
+    "analytics-ui-02"
+  ]
+}

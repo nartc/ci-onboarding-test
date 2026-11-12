@@ -1,0 +1,16 @@
+{
+  "name": "compliance-ui-04",
+  "ownWeight": 9,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "compliance-feature-01",
+    "compliance-feature-02",
+    "compliance-feature-03",
+    "compliance-feature-04",
+    "partners-feature-04",
+    "partners-feature-01"
+  ]
+}

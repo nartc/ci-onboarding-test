@@ -1,0 +1,9 @@
+{
+  "name": "fulfillment-e2e",
+  "ownWeight": 17,
+  "dependencies": [
+    "fulfillment-api",
+    "fulfillment-portal",
+    "subscriptions-portal"
+  ]
+}

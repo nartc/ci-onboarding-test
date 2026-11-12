@@ -1,0 +1,18 @@
+{
+  "name": "identity-api",
+  "ownWeight": 3,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "identity-feature-01",
+    "identity-feature-02",
+    "identity-feature-03",
+    "identity-feature-04",
+    "identity-data-01",
+    "identity-data-02",
+    "identity-data-03",
+    "identity-data-04"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "media-ui-02",
+  "ownWeight": 17,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "media-feature-01",
+    "media-feature-02",
+    "media-feature-03",
+    "media-feature-04",
+    "content-feature-02",
+    "content-feature-03"
+  ]
+}

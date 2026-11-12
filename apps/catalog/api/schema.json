@@ -1,0 +1,18 @@
+{
+  "name": "catalog-api",
+  "ownWeight": 7,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "catalog-feature-01",
+    "catalog-feature-02",
+    "catalog-feature-03",
+    "catalog-feature-04",
+    "catalog-data-01",
+    "catalog-data-02",
+    "catalog-data-03",
+    "catalog-data-04"
+  ]
+}

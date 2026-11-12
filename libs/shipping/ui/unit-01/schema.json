@@ -1,0 +1,16 @@
+{
+  "name": "shipping-ui-01",
+  "ownWeight": 14,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shipping-feature-01",
+    "shipping-feature-02",
+    "shipping-feature-03",
+    "shipping-feature-04",
+    "inventory-feature-01",
+    "inventory-feature-02"
+  ]
+}

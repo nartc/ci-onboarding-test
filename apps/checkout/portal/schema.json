@@ -1,0 +1,20 @@
+{
+  "name": "checkout-portal",
+  "ownWeight": 10,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "checkout-feature-01",
+    "checkout-feature-02",
+    "checkout-feature-03",
+    "checkout-feature-04",
+    "checkout-ui-01",
+    "checkout-ui-02",
+    "checkout-ui-03",
+    "checkout-ui-04",
+    "catalog-ui-01",
+    "catalog-ui-02"
+  ]
+}

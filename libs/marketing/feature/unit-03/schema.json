@@ -1,0 +1,16 @@
+{
+  "name": "marketing-feature-03",
+  "ownWeight": 16,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "marketing-data-01",
+    "marketing-data-02",
+    "marketing-data-03",
+    "marketing-data-04",
+    "support-data-03",
+    "support-data-04"
+  ]
+}

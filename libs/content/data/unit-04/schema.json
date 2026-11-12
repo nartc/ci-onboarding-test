@@ -1,0 +1,16 @@
+{
+  "name": "content-data-04",
+  "ownWeight": 10,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "content-util-01",
+    "content-util-02",
+    "content-util-03",
+    "content-util-04",
+    "marketing-util-04",
+    "marketing-util-01"
+  ]
+}

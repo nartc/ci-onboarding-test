@@ -1,0 +1,16 @@
+{
+  "name": "commerce-feature-03",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-03",
+    "shared-l2-04",
+    "shared-l2-06",
+    "shared-l2-08",
+    "commerce-data-01",
+    "commerce-data-02",
+    "commerce-data-03",
+    "commerce-data-04",
+    "experimentation-data-03",
+    "experimentation-data-04"
+  ]
+}

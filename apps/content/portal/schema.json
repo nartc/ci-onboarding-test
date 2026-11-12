@@ -1,0 +1,20 @@
+{
+  "name": "content-portal",
+  "ownWeight": 13,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "content-feature-01",
+    "content-feature-02",
+    "content-feature-03",
+    "content-feature-04",
+    "content-ui-01",
+    "content-ui-02",
+    "content-ui-03",
+    "content-ui-04",
+    "marketing-ui-01",
+    "marketing-ui-02"
+  ]
+}

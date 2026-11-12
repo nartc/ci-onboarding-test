@@ -1,0 +1,9 @@
+{
+  "name": "experimentation-e2e",
+  "ownWeight": 4,
+  "dependencies": [
+    "experimentation-api",
+    "experimentation-portal",
+    "observability-portal"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "recommendations-api",
+  "ownWeight": 16,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "recommendations-feature-01",
+    "recommendations-feature-02",
+    "recommendations-feature-03",
+    "recommendations-feature-04",
+    "recommendations-data-01",
+    "recommendations-data-02",
+    "recommendations-data-03",
+    "recommendations-data-04"
+  ]
+}

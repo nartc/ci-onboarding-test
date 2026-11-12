@@ -1,0 +1,10 @@
+{
+  "name": "subscriptions-util-03",
+  "ownWeight": 14,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02"
+  ]
+}

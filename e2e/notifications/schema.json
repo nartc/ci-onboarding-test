@@ -1,0 +1,9 @@
+{
+  "name": "notifications-e2e",
+  "ownWeight": 6,
+  "dependencies": [
+    "notifications-api",
+    "notifications-portal",
+    "payments-portal"
+  ]
+}

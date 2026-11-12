@@ -1,0 +1,16 @@
+{
+  "name": "analytics-data-04",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "analytics-util-01",
+    "analytics-util-02",
+    "analytics-util-03",
+    "analytics-util-04",
+    "search-util-04",
+    "search-util-01"
+  ]
+}

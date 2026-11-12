@@ -1,0 +1,9 @@
+{
+  "name": "analytics-e2e",
+  "ownWeight": 8,
+  "dependencies": [
+    "analytics-api",
+    "analytics-portal",
+    "search-portal"
+  ]
+}

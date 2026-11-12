@@ -1,0 +1,18 @@
+{
+  "name": "compliance-api",
+  "ownWeight": 9,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "compliance-feature-01",
+    "compliance-feature-02",
+    "compliance-feature-03",
+    "compliance-feature-04",
+    "compliance-data-01",
+    "compliance-data-02",
+    "compliance-data-03",
+    "compliance-data-04"
+  ]
+}

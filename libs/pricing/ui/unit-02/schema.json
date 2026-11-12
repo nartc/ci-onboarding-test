@@ -1,0 +1,16 @@
+{
+  "name": "pricing-ui-02",
+  "ownWeight": 8,
+  "dependencies": [
+    "shared-l2-03",
+    "shared-l2-04",
+    "shared-l2-06",
+    "shared-l2-08",
+    "pricing-feature-01",
+    "pricing-feature-02",
+    "pricing-feature-03",
+    "pricing-feature-04",
+    "recommendations-feature-02",
+    "recommendations-feature-03"
+  ]
+}

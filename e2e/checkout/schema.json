@@ -1,0 +1,9 @@
+{
+  "name": "checkout-e2e",
+  "ownWeight": 2,
+  "dependencies": [
+    "checkout-api",
+    "checkout-portal",
+    "catalog-portal"
+  ]
+}

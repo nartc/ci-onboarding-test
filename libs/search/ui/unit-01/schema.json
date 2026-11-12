@@ -1,0 +1,16 @@
+{
+  "name": "search-ui-01",
+  "ownWeight": 9,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "search-feature-01",
+    "search-feature-02",
+    "search-feature-03",
+    "search-feature-04",
+    "notifications-feature-01",
+    "notifications-feature-02"
+  ]
+}

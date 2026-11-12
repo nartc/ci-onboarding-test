@@ -1,0 +1,16 @@
+{
+  "name": "support-feature-04",
+  "ownWeight": 13,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "support-data-01",
+    "support-data-02",
+    "support-data-03",
+    "support-data-04",
+    "reporting-data-04",
+    "reporting-data-01"
+  ]
+}

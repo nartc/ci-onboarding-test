@@ -1,0 +1,10 @@
+{
+  "name": "content-util-03",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06"
+  ]
+}

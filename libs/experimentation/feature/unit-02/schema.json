@@ -1,0 +1,16 @@
+{
+  "name": "experimentation-feature-02",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "experimentation-data-01",
+    "experimentation-data-02",
+    "experimentation-data-03",
+    "experimentation-data-04",
+    "observability-data-02",
+    "observability-data-03"
+  ]
+}

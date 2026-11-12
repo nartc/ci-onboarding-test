@@ -1,0 +1,36 @@
+{
+  "name": "ci-onboarding-test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.20.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "generate": "node tools/generate-workspace.mjs",
+    "generate:check": "node tools/generate-workspace.mjs --check",
+    "graph": "nx graph",
+    "graph:tasks": "nx run-many -t verify,e2e --graph",
+    "graph:export": "node tools/graph-report.mjs",
+    "graph:check": "node tools/graph-report.mjs --check",
+    "smoke": "nx run commerce-portal:verify",
+    "smoke:e2e": "nx run commerce-e2e:e2e",
+    "build": "nx run-many -t build",
+    "test": "nx run-many -t test",
+    "lint": "nx run-many -t lint",
+    "typecheck": "nx run-many -t typecheck",
+    "verify": "nx run-many -t verify,e2e",
+    "test:tools": "node --test tools/*.test.mjs",
+    "affected": "nx affected -t verify,e2e"
+  },
+  "devDependencies": {
+    "@nx/js": "24.0.6",
+    "@types/node": "^24.10.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.14.0",
+    "nx": "24.0.6",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.2"
+  }
+}

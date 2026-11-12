@@ -1,0 +1,20 @@
+{
+  "name": "media-portal",
+  "ownWeight": 15,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "media-feature-01",
+    "media-feature-02",
+    "media-feature-03",
+    "media-feature-04",
+    "media-ui-01",
+    "media-ui-02",
+    "media-ui-03",
+    "media-ui-04",
+    "content-ui-01",
+    "content-ui-02"
+  ]
+}

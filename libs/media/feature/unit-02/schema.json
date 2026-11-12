@@ -1,0 +1,16 @@
+{
+  "name": "media-feature-02",
+  "ownWeight": 6,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "media-data-01",
+    "media-data-02",
+    "media-data-03",
+    "media-data-04",
+    "content-data-02",
+    "content-data-03"
+  ]
+}

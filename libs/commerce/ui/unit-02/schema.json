@@ -1,0 +1,16 @@
+{
+  "name": "commerce-ui-02",
+  "ownWeight": 8,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "commerce-feature-01",
+    "commerce-feature-02",
+    "commerce-feature-03",
+    "commerce-feature-04",
+    "experimentation-feature-02",
+    "experimentation-feature-03"
+  ]
+}

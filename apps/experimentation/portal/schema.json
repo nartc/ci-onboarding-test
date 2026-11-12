@@ -1,0 +1,20 @@
+{
+  "name": "experimentation-portal",
+  "ownWeight": 14,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "experimentation-feature-01",
+    "experimentation-feature-02",
+    "experimentation-feature-03",
+    "experimentation-feature-04",
+    "experimentation-ui-01",
+    "experimentation-ui-02",
+    "experimentation-ui-03",
+    "experimentation-ui-04",
+    "observability-ui-01",
+    "observability-ui-02"
+  ]
+}

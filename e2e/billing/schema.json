@@ -1,0 +1,9 @@
+{
+  "name": "billing-e2e",
+  "ownWeight": 17,
+  "dependencies": [
+    "billing-api",
+    "billing-portal",
+    "identity-portal"
+  ]
+}

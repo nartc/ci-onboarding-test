@@ -1,0 +1,20 @@
+{
+  "name": "shipping-portal",
+  "ownWeight": 14,
+  "dependencies": [
+    "shared-l2-07",
+    "shared-l2-08",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shipping-feature-01",
+    "shipping-feature-02",
+    "shipping-feature-03",
+    "shipping-feature-04",
+    "shipping-ui-01",
+    "shipping-ui-02",
+    "shipping-ui-03",
+    "shipping-ui-04",
+    "inventory-ui-01",
+    "inventory-ui-02"
+  ]
+}

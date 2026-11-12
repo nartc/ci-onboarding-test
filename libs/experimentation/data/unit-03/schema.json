@@ -1,0 +1,16 @@
+{
+  "name": "experimentation-data-03",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-02",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shared-l2-07",
+    "experimentation-util-01",
+    "experimentation-util-02",
+    "experimentation-util-03",
+    "experimentation-util-04",
+    "observability-util-03",
+    "observability-util-04"
+  ]
+}

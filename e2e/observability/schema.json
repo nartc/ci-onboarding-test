@@ -1,0 +1,9 @@
+{
+  "name": "observability-e2e",
+  "ownWeight": 3,
+  "dependencies": [
+    "observability-api",
+    "observability-portal",
+    "compliance-portal"
+  ]
+}

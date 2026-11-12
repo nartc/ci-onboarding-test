@@ -1,0 +1,9 @@
+{
+  "name": "identity-e2e",
+  "ownWeight": 16,
+  "dependencies": [
+    "identity-api",
+    "identity-portal",
+    "commerce-portal"
+  ]
+}

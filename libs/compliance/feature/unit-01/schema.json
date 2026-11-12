@@ -1,0 +1,16 @@
+{
+  "name": "compliance-feature-01",
+  "ownWeight": 12,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "compliance-data-01",
+    "compliance-data-02",
+    "compliance-data-03",
+    "compliance-data-04",
+    "partners-data-01",
+    "partners-data-02"
+  ]
+}

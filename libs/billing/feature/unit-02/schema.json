@@ -1,0 +1,16 @@
+{
+  "name": "billing-feature-02",
+  "ownWeight": 5,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "billing-data-01",
+    "billing-data-02",
+    "billing-data-03",
+    "billing-data-04",
+    "identity-data-02",
+    "identity-data-03"
+  ]
+}

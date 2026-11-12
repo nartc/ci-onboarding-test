@@ -1,0 +1,20 @@
+{
+  "name": "fulfillment-portal",
+  "ownWeight": 6,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "fulfillment-feature-01",
+    "fulfillment-feature-02",
+    "fulfillment-feature-03",
+    "fulfillment-feature-04",
+    "fulfillment-ui-01",
+    "fulfillment-ui-02",
+    "fulfillment-ui-03",
+    "fulfillment-ui-04",
+    "subscriptions-ui-01",
+    "subscriptions-ui-02"
+  ]
+}

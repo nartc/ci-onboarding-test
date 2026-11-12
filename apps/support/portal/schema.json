@@ -1,0 +1,20 @@
+{
+  "name": "support-portal",
+  "ownWeight": 9,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "support-feature-01",
+    "support-feature-02",
+    "support-feature-03",
+    "support-feature-04",
+    "support-ui-01",
+    "support-ui-02",
+    "support-ui-03",
+    "support-ui-04",
+    "reporting-ui-01",
+    "reporting-ui-02"
+  ]
+}

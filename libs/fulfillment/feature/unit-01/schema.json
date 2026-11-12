@@ -1,0 +1,16 @@
+{
+  "name": "fulfillment-feature-01",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01",
+    "fulfillment-data-01",
+    "fulfillment-data-02",
+    "fulfillment-data-03",
+    "fulfillment-data-04",
+    "subscriptions-data-01",
+    "subscriptions-data-02"
+  ]
+}

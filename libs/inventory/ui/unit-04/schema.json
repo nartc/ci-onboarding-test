@@ -1,0 +1,16 @@
+{
+  "name": "inventory-ui-04",
+  "ownWeight": 13,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "inventory-feature-01",
+    "inventory-feature-02",
+    "inventory-feature-03",
+    "inventory-feature-04",
+    "checkout-feature-04",
+    "checkout-feature-01"
+  ]
+}

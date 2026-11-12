@@ -1,0 +1,16 @@
+{
+  "name": "pricing-data-04",
+  "ownWeight": 5,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "pricing-util-01",
+    "pricing-util-02",
+    "pricing-util-03",
+    "pricing-util-04",
+    "recommendations-util-04",
+    "recommendations-util-01"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "shipping-feature-02",
+  "ownWeight": 4,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "shipping-data-01",
+    "shipping-data-02",
+    "shipping-data-03",
+    "shipping-data-04",
+    "inventory-data-02",
+    "inventory-data-03"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "name": "partners-api",
+  "ownWeight": 7,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "partners-feature-01",
+    "partners-feature-02",
+    "partners-feature-03",
+    "partners-feature-04",
+    "partners-data-01",
+    "partners-data-02",
+    "partners-data-03",
+    "partners-data-04"
+  ]
+}

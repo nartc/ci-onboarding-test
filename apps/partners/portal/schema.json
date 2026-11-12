@@ -1,0 +1,20 @@
+{
+  "name": "partners-portal",
+  "ownWeight": 8,
+  "dependencies": [
+    "shared-l2-05",
+    "shared-l2-06",
+    "shared-l2-08",
+    "shared-l2-02",
+    "partners-feature-01",
+    "partners-feature-02",
+    "partners-feature-03",
+    "partners-feature-04",
+    "partners-ui-01",
+    "partners-ui-02",
+    "partners-ui-03",
+    "partners-ui-04",
+    "fulfillment-ui-01",
+    "fulfillment-ui-02"
+  ]
+}

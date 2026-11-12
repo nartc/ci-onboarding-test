@@ -1,0 +1,9 @@
+{
+  "name": "compliance-e2e",
+  "ownWeight": 2,
+  "dependencies": [
+    "compliance-api",
+    "compliance-portal",
+    "partners-portal"
+  ]
+}

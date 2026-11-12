@@ -1,0 +1,20 @@
+{
+  "name": "commerce-portal",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-01",
+    "shared-l2-02",
+    "shared-l2-04",
+    "shared-l2-06",
+    "commerce-feature-01",
+    "commerce-feature-02",
+    "commerce-feature-03",
+    "commerce-feature-04",
+    "commerce-ui-01",
+    "commerce-ui-02",
+    "commerce-ui-03",
+    "commerce-ui-04",
+    "experimentation-ui-01",
+    "experimentation-ui-02"
+  ]
+}

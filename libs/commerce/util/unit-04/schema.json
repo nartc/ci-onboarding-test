@@ -1,0 +1,10 @@
+{
+  "name": "commerce-util-04",
+  "ownWeight": 11,
+  "dependencies": [
+    "shared-l2-04",
+    "shared-l2-05",
+    "shared-l2-07",
+    "shared-l2-01"
+  ]
+}

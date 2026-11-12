@@ -1,0 +1,31 @@
+{
+  "sharedLayers": 3,
+  "sharedPerLayer": 8,
+  "projectsPerLayer": 4,
+  "domains": [
+    "commerce",
+    "identity",
+    "billing",
+    "catalog",
+    "checkout",
+    "inventory",
+    "shipping",
+    "payments",
+    "notifications",
+    "search",
+    "analytics",
+    "reporting",
+    "support",
+    "marketing",
+    "content",
+    "media",
+    "recommendations",
+    "pricing",
+    "subscriptions",
+    "fulfillment",
+    "partners",
+    "compliance",
+    "observability",
+    "experimentation"
+  ]
+}

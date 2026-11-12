@@ -1,0 +1,16 @@
+{
+  "name": "reporting-ui-03",
+  "ownWeight": 2,
+  "dependencies": [
+    "shared-l2-06",
+    "shared-l2-07",
+    "shared-l2-01",
+    "shared-l2-03",
+    "reporting-feature-01",
+    "reporting-feature-02",
+    "reporting-feature-03",
+    "reporting-feature-04",
+    "analytics-feature-03",
+    "analytics-feature-04"
+  ]
+}

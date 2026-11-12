@@ -1,0 +1,9 @@
+{
+  "name": "search-e2e",
+  "ownWeight": 7,
+  "dependencies": [
+    "search-api",
+    "search-portal",
+    "notifications-portal"
+  ]
+}

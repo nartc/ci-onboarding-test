@@ -1,0 +1,16 @@
+{
+  "name": "payments-feature-01",
+  "ownWeight": 7,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05",
+    "payments-data-01",
+    "payments-data-02",
+    "payments-data-03",
+    "payments-data-04",
+    "shipping-data-01",
+    "shipping-data-02"
+  ]
+}

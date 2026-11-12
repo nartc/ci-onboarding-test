@@ -1,0 +1,10 @@
+{
+  "name": "shipping-util-02",
+  "ownWeight": 16,
+  "dependencies": [
+    "shared-l2-08",
+    "shared-l2-01",
+    "shared-l2-03",
+    "shared-l2-05"
+  ]
+}

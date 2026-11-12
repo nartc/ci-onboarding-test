@@ -1,0 +1,9 @@
+{
+  "name": "media-e2e",
+  "ownWeight": 13,
+  "dependencies": [
+    "media-api",
+    "media-portal",
+    "content-portal"
+  ]
+}

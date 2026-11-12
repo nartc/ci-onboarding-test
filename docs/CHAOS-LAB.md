@@ -21,12 +21,18 @@ The cap is a static scheduling check, not a cloud billing limiter. Nx Cloud does
 | Job | Main machine | Extra workers | Maximum machines | Depends on |
 | --- | --- | --- | ---: | --- |
 | `mixed` | medium; also executes tasks | 2 medium + 1 large | 4 | none |
-| `scaled` | medium; background worker disabled | small: 1 medium; medium: 1 medium + 1 large; large: 2 medium + 1 large | 4 | none |
+| `scaled` | medium; background worker disabled | small: 3 medium; medium: 3 medium + 2 large; large: 4 medium + 3 large | 8 | `mixed` |
 | `semantics` | medium; distribution off | none | 1 | both distributed jobs |
 
-Only `mixed` and `scaled` can overlap. The validator calculates the maximum weighted set of jobs without dependency relationships rather than summing every job or forgetting the main machines.
+The jobs run in order: `mixed` → `scaled` → `semantics`. The validator calculates the maximum weighted set of jobs without dependency relationships rather than summing every job or forgetting the main machines. Removing the `scaled` dependency would allow 12 machines and is rejected.
 
 Worker definitions are imported from `.nx/pipelines/chaos-workers.yaml`. That file has no trigger and is not another pipeline.
+
+### First live finding: runtime worker minimum
+
+The initial `e5663c2` configuration was schema-valid but the service reported: **“You are distributing on 1 worker(s). Minimum 3 worker(s) are required for distribution.”** The small tier had one worker; the medium tier had two. This is a runtime configuration constraint absent from the published JSON Schema, not evidence of a scheduler defect.
+
+The corrected pools have **3 / 5 / 7 additional workers**, with nondecreasing counts per template. The coordinator still consumes one machine even with its worker disabled. To preserve the approved eight-machine ceiling, `scaled` waits for `mixed`. The local guard now conservatively requires at least three additional workers in every distributed pool, regardless of whether the main-job worker participates; `workers: false` remains valid for the semantics job.
 
 ### Distributed probes
 
@@ -92,7 +98,7 @@ NX_NO_CLOUD=true node tools/chaos/run-shard.mjs mixed
 NX_NO_CLOUD=true node tools/chaos/run-shard.mjs scaled
 ```
 
-`pnpm chaos:check` fails closed on wildcard triggers, more than eight simultaneous scheduled machines, unknown or cyclic job dependencies, incomplete/decreasing worker pools, unrunnable routing, writable repository tokens, invalid timeouts, duplicate step IDs, and conflicting step aliases.
+`pnpm chaos:check` fails closed on wildcard triggers, more than eight simultaneous scheduled machines, unknown or cyclic job dependencies, incomplete/decreasing or undersized worker pools, unrunnable routing, writable repository tokens, invalid timeouts, duplicate step IDs, and conflicting step aliases.
 
 These checks enforce this lab's policy, not every rule of the Nx Cloud runtime.
 

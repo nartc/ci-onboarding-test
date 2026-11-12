@@ -15,7 +15,7 @@ const probe = fileURLToPath(new URL('./chaos/probes.mjs', import.meta.url));
 
 test('lab machine accounting includes orchestration machines and peaks at eight', () => {
   assert.deepEqual(validateLab(source.pipeline, source.templates), {
-    maximumConcurrentMachines: 8, concurrentJobs: ['mixed', 'scaled'], machinesPerJob: { mixed: 4, scaled: 4, semantics: 1 },
+    maximumConcurrentMachines: 8, concurrentJobs: ['scaled'], machinesPerJob: { mixed: 4, scaled: 8, semantics: 1 },
   });
 });
 
@@ -23,6 +23,22 @@ test('lab rejects a ninth concurrent machine', () => {
   const { pipeline, templates } = copy();
   delete pipeline.jobs.semantics.needs;
   assert.throws(() => validateLab(pipeline, templates), /Machine cap exceeded/);
+});
+
+test('lab rejects overlapping mixed and scaled jobs after increasing pool sizes', () => {
+  const { pipeline, templates } = copy();
+  delete pipeline.jobs.scaled.needs;
+  assert.throws(() => validateLab(pipeline, templates), /Machine cap exceeded: 12/);
+});
+
+test('lab rejects zero, one, and two-worker distributed pools', () => {
+  for (const count of [0, 1, 2]) {
+    const { pipeline, templates } = copy();
+    templates.scaled.small.count = `${count} linux-medium-js`;
+    assert.throws(() => validateLab(pipeline, templates), /at least three additional workers/);
+    templates.mixed = `${count} linux-medium-js`;
+    assert.throws(() => validateLab(pipeline, templates), /at least three additional workers/);
+  }
 });
 
 test('lab rejects wildcard triggers and writable repository tokens', () => {
@@ -52,19 +68,19 @@ test('lab rejects incomplete scaling and descending workload thresholds', () => 
   assert.throws(() => validateLab(pipeline, templates), /thresholds must increase/);
 });
 
-test('lab rejects shrinking pools and unrunnable disabled-main-worker setups', () => {
+test('lab rejects shrinking pools and undersized disabled-main-worker setups', () => {
   let { pipeline, templates } = copy();
   templates.scaled.large = '1 linux-medium-js';
   assert.throws(() => validateLab(pipeline, templates), /cannot decrease/);
   ({ pipeline, templates } = copy());
   templates.scaled.small.count = '0';
-  assert.throws(() => validateLab(pipeline, templates), /another runnable worker/);
+  assert.throws(() => validateLab(pipeline, templates), /at least three additional workers/);
 });
 
 test('lab rejects oversized pools and missing assignment destinations', () => {
   let { pipeline, templates } = copy();
-  templates.mixed.workers = '4 linux-large-js';
-  assert.throws(() => validateLab(pipeline, templates), /three additional workers/);
+  templates.mixed.workers = '8 linux-large-js';
+  assert.throws(() => validateLab(pipeline, templates), /seven additional workers/);
   ({ pipeline, templates } = copy());
   templates.mixed.workers = '3 linux-medium-js';
   assert.throws(() => validateLab(pipeline, templates), /routing destination/);

@@ -29,6 +29,8 @@ jobs:
         run: node tools/chaos/run-shard.mjs mixed
 
   scaled:
+    # Scaling reaches seven workers plus a coordinator; do not overlap mixed.
+    needs: mixed
     runs-on: linux-medium-js
     workers: scaled
     timeout-minutes: 10

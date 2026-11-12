@@ -21,7 +21,7 @@ export function parseYaml(source) {
 
 function countWorkers(value, mainTemplate) {
   if (Number.isInteger(value)) {
-    assert.ok(value >= 0 && value <= 3, 'Additional workers must be between zero and three per job');
+    assert.ok(value >= 0 && value <= 7, 'Additional workers must be between zero and seven per job');
     return { [mainTemplate]: value };
   }
   assert.equal(typeof value, 'string');
@@ -35,14 +35,18 @@ function countWorkers(value, mainTemplate) {
     assert.ok(!(template in result), `Duplicate worker template: ${template}`);
     result[template] = Number(count);
   }
-  assert.ok(Object.values(result).reduce((a, b) => a + b, 0) <= 3, 'At most three additional workers per job');
+  assert.ok(Object.values(result).reduce((a, b) => a + b, 0) <= 7, 'At most seven additional workers per job');
   return result;
 }
 
 function workerPeak(setting, templates, mainTemplate) {
   if (setting === false) return 0;
   const value = typeof setting === 'string' && setting in templates ? templates[setting] : setting;
-  if (typeof value !== 'object' || value === null) return Object.values(countWorkers(value ?? 0, mainTemplate)).reduce((a, b) => a + b, 0);
+  if (typeof value !== 'object' || value === null) {
+    const count = Object.values(countWorkers(value ?? 0, mainTemplate)).reduce((a, b) => a + b, 0);
+    assert.ok(count >= 3, 'Lab distribution requires at least three additional workers');
+    return count;
+  }
   let pools;
   if ('workers' in value) {
     assert.ok(!['small', 'medium', 'large'].some((size) => size in value), 'Cannot mix fixed and sized workers');
@@ -60,7 +64,9 @@ function workerPeak(setting, templates, mainTemplate) {
     }
   }
   for (const pool of pools) {
-    if (value['main-job-worker'] === false) assert.ok(Object.values(pool).some((count) => count > 0), 'Disabling the main worker needs another runnable worker in every size');
+    // The first live trial exposed a runtime minimum absent from the JSON Schema.
+    // Conservatively require three additional workers, regardless of main-worker participation.
+    assert.ok(Object.values(pool).reduce((a, b) => a + b, 0) >= 3, 'Lab distribution requires at least three additional workers in every size');
     for (const rule of value['assignment-rules'] ?? []) {
       assert.ok(Array.isArray(rule['run-on']) && rule['run-on'].length, 'Assignment rules need a destination');
       for (const destination of rule['run-on']) {

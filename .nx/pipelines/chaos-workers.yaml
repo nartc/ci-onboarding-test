@@ -1,0 +1,23 @@
+# Imported by chaos.yaml; no triggers, so this file does not start a pipeline.
+mixed:
+  workers: 2 linux-medium-js; 1 linux-large-js
+  assignment-rules:
+    - targets: [e2e]
+      run-on:
+        - agent: linux-large-js
+  scheduling-constraints:
+    - targets: [test]
+      cannot-run-with:
+        - targets: [typecheck]
+  stop-after: [verify, e2e]
+
+scaled:
+  small:
+    count: 1 linux-medium-js
+    workload: 15%
+  medium:
+    count: 1 linux-medium-js; 1 linux-large-js
+    workload: 55%
+  large: 2 linux-medium-js; 1 linux-large-js
+  main-job-worker: false
+  stop-after: [verify, e2e]

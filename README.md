@@ -157,6 +157,16 @@ Default size: `sharedLayers × sharedPerLayer + domains × (4 × projectsPerLaye
 
 `generate:check` is intentionally **not** a CI requirement, so legitimate source edits for affected/cache experiments are allowed. `graph:check` still enforces the configured project topology.
 
+## Bounded CI chaos lab
+
+[The chaos lab](docs/CHAOS-LAB.md) exercises Nx Cloud CI itself: mixed worker pools, dynamic sizing, job dependencies, parallel steps, expressions, controlled failures, and timeouts. It runs only on pushes to `ci-chaos/schema-lab`, with an eight-machine scheduling cap; normal CI is unchanged.
+
+```sh
+pnpm chaos:check                 # Offline schema and safety checks
+pnpm chaos:schema                # Fifteen local schema boundary cases
+NX_NO_CLOUD=true pnpm chaos:plan  # Export the two experimental task graphs
+```
+
 ## CI
 
 ### Nx Cloud CI

@@ -6,12 +6,12 @@ This branch tests the CI system, not application behavior alone. Deliberate fail
 
 - Repository: `nartc/ci-onboarding-test`; existing connected Nx Cloud workspace.
 - Base: merged `main` commit `27ad6ec`.
-- Approved ceiling: **8 concurrently scheduled machines**, including orchestration machines even when their background worker is disabled.
-- Trigger: a push to **exactly `ci-chaos/schema-lab`**. No PR, main, tag, schedule, or wildcard trigger.
+- Approved ceiling: **8 concurrently scheduled machines**: at most seven Nx Cloud machines, plus one reserved GitHub Actions runner. Coordinators count even when their background worker is disabled.
+- Lab trigger: **PRs targeting `main` only**, via guarded jobs in `.nx/pipelines/ci.yaml`. Branch pushes do not launch it. Pushes to `main` run only the regular check.
 - One live trial at a time. Do not push another trial until the preceding run is terminal and its workers are stopped.
 - Ten-minute distributed jobs; a three-minute semantics job. No workload loops or continuous stress generation.
 - Read-only repository permissions. No secrets, deployments, writable tokens, privileged containers, or auto-applied self-healing fixes.
-- Normal `.nx/pipelines/ci.yaml` and `.github/workflows/ci.yml` are unchanged.
+- The regular Nx check and lab share one dependency chain in `.nx/pipelines/ci.yaml`, avoiding separate overlapping Nx Cloud pipelines. `.github/workflows/ci.yml` remains unchanged.
 - Invalid configuration fixtures live in JavaScript outside the pipeline discovery directory. They are tested locally, not submitted to the service.
 
 The cap is a static scheduling check, not a cloud billing limiter. Nx Cloud does not expose a pipeline `concurrency` setting in this schema; preventing overlapping pipeline executions is an operator responsibility. Unexpected lingering workers are a failure to investigate, not a reason to launch the next run.
@@ -20,11 +20,12 @@ The cap is a static scheduling check, not a cloud billing limiter. Nx Cloud does
 
 | Job | Main machine | Extra workers | Maximum machines | Depends on |
 | --- | --- | --- | ---: | --- |
-| `mixed` | medium; also executes tasks | 2 medium + 1 large | 4 | none |
-| `scaled` | medium; background worker disabled | small: 3 medium; medium: 3 medium + 2 large; large: 4 medium + 3 large | 8 | `mixed` |
+| `main` | medium; also executes tasks | 3 large | 4 | none |
+| `mixed` | medium; also executes tasks | 2 medium + 1 large | 4 | `main` |
+| `scaled` | medium; background worker disabled | small: 3 medium; medium: 3 medium + 1 large; large: 4 medium + 2 large | 7 | `mixed` |
 | `semantics` | medium; distribution off | none | 1 | both distributed jobs |
 
-The jobs run in order: `mixed` → `scaled` → `semantics`. The validator calculates the maximum weighted set of jobs without dependency relationships rather than summing every job or forgetting the main machines. Removing the `scaled` dependency would allow 12 machines and is rejected.
+On PRs, the Nx jobs run in order: `main` → `mixed` → `scaled` → `semantics`. The existing GitHub Actions job can run alongside them, so its one runner is reserved in the cap. The validator calculates the maximum weighted set of Nx jobs without dependency relationships, then adds that reservation. Removing the `scaled` dependency would allow 12 total machines and is rejected. Main-branch pushes skip all three lab jobs.
 
 Worker definitions are imported from `.nx/pipelines/chaos-workers.yaml`. That file has no trigger and is not another pipeline.
 
@@ -32,7 +33,7 @@ Worker definitions are imported from `.nx/pipelines/chaos-workers.yaml`. That fi
 
 The initial `e5663c2` configuration was schema-valid but the service reported: **“You are distributing on 1 worker(s). Minimum 3 worker(s) are required for distribution.”** The small tier had one worker; the medium tier had two. This is a runtime configuration constraint absent from the published JSON Schema, not evidence of a scheduler defect.
 
-The corrected pools have **3 / 5 / 7 additional workers**, with nondecreasing counts per template. The coordinator still consumes one machine even with its worker disabled. To preserve the approved eight-machine ceiling, `scaled` waits for `mixed`. The local guard now conservatively requires at least three additional workers in every distributed pool, regardless of whether the main-job worker participates; `workers: false` remains valid for the semantics job.
+The PR-only configuration uses **3 / 4 / 6 additional workers**, with nondecreasing counts per template. The coordinator still consumes one machine even with its worker disabled. `scaled` waits for `mixed`, and its maximum is seven Nx Cloud machines, leaving the eighth slot for GitHub Actions. The local guard now conservatively requires at least three additional workers in every distributed pool, regardless of whether the main-job worker participates; `workers: false` remains valid for the semantics job.
 
 ### Distributed probes
 
@@ -48,7 +49,7 @@ Task completion and package integrity are asserted. Actual agent participation, 
 
 ### Orchestration probes
 
-The `semantics` job has `needs: [mixed, scaled]` and `if: always()`, so it can report an upstream failure instead of silently disappearing.
+The `semantics` job has `needs: [mixed, scaled]` and `if: always() && nxcloud.event_name == 'pull_request'`, so it can report a PR's upstream failure without running on main-branch pushes.
 
 It tests:
 
@@ -98,7 +99,7 @@ NX_NO_CLOUD=true node tools/chaos/run-shard.mjs mixed
 NX_NO_CLOUD=true node tools/chaos/run-shard.mjs scaled
 ```
 
-`pnpm chaos:check` fails closed on wildcard triggers, more than eight simultaneous scheduled machines, unknown or cyclic job dependencies, incomplete/decreasing or undersized worker pools, unrunnable routing, writable repository tokens, invalid timeouts, duplicate step IDs, and conflicting step aliases.
+`pnpm chaos:check` fails closed on unexpected triggers, missing PR-only guards, chaos detached from the normal check, more than eight simultaneous scheduled machines (including the GitHub runner reservation), unknown or cyclic job dependencies, incomplete/decreasing or undersized worker pools, unrunnable routing, writable repository tokens, invalid timeouts, duplicate step IDs, and conflicting step aliases.
 
 These checks enforce this lab's policy, not every rule of the Nx Cloud runtime.
 

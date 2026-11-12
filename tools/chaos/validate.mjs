@@ -21,7 +21,7 @@ export function parseYaml(source) {
 
 function countWorkers(value, mainTemplate) {
   if (Number.isInteger(value)) {
-    assert.ok(value >= 0 && value <= 7, 'Additional workers must be between zero and seven per job');
+    assert.ok(value >= 0 && value <= 6, 'Additional workers must be between zero and six per job');
     return { [mainTemplate]: value };
   }
   assert.equal(typeof value, 'string');
@@ -35,7 +35,7 @@ function countWorkers(value, mainTemplate) {
     assert.ok(!(template in result), `Duplicate worker template: ${template}`);
     result[template] = Number(count);
   }
-  assert.ok(Object.values(result).reduce((a, b) => a + b, 0) <= 7, 'At most seven additional workers per job');
+  assert.ok(Object.values(result).reduce((a, b) => a + b, 0) <= 6, 'At most six additional workers per job');
   return result;
 }
 
@@ -83,7 +83,14 @@ export function validateLab(pipeline, templates) {
   const resolved = { ...pipeline, 'worker-templates': templates };
   assert.ok(schemaValidate(resolved), JSON.stringify(schemaValidate.errors));
   assert.equal(pipeline['worker-templates'], '.nx/pipelines/chaos-workers.yaml');
-  assert.deepEqual(pipeline.on, { experiment: { event: 'PUSH', branches: ['ci-chaos/schema-lab'] } }, 'Chaos must only trigger on the explicit experiment branch');
+  assert.deepEqual(pipeline.on, {
+    'pull-requests': { event: 'PR', branches: ['main'] }, pushes: { event: 'PUSH', branches: ['main'] },
+  }, 'Only approved PR/main triggers are allowed');
+  for (const name of ['mixed', 'scaled', 'semantics']) {
+    const expected = name === 'semantics' ? "always() && nxcloud.event_name == 'pull_request'" : "nxcloud.event_name == 'pull_request'";
+    assert.equal(pipeline.jobs?.[name]?.if, expected, `${name} must be PR-only`);
+  }
+  assert.equal(pipeline.jobs?.mixed?.needs, 'main', 'Chaos must follow the regular Nx check');
   assert.ok(!pipeline.triggers && !pipeline.workflows, 'No alternate trigger/job aliases in the active lab');
   assert.deepEqual(pipeline['self-healing'], { 'fix-tasks-patterns': [], 'auto-apply-patterns': [] });
   const jobs = pipeline.jobs;
@@ -134,13 +141,17 @@ export function validateLab(pipeline, templates) {
     const count = concurrent.reduce((total, name) => total + machines[name], 0);
     if (count > peak) { peak = count; peakJobs = concurrent; }
   }
-  assert.ok(peak <= 8, `Machine cap exceeded: ${peak} concurrent machines (${peakJobs.join(', ')})`);
-  return { maximumConcurrentMachines: peak, concurrentJobs: peakJobs, machinesPerJob: machines };
+  // Every PR also starts the existing single-job GitHub Actions workflow.
+  const reservedGithubRunners = 1;
+  const total = peak + reservedGithubRunners;
+  assert.ok(total <= 8, `Machine cap exceeded: ${total} concurrent machines (${peakJobs.join(', ')} + GitHub runner)`);
+  return { maximumConcurrentMachines: total, maximumConcurrentNxCloudMachines: peak, reservedGithubRunners,
+    concurrentJobs: peakJobs, machinesPerJob: machines };
 }
 
 export async function loadLab() {
   return {
-    pipeline: parseYaml(await readFile(path.join(workspace, '.nx/pipelines/chaos.yaml'), 'utf8')),
+    pipeline: parseYaml(await readFile(path.join(workspace, '.nx/pipelines/ci.yaml'), 'utf8')),
     templates: parseYaml(await readFile(path.join(workspace, '.nx/pipelines/chaos-workers.yaml'), 'utf8')),
   };
 }

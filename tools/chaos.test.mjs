@@ -15,7 +15,8 @@ const probe = fileURLToPath(new URL('./chaos/probes.mjs', import.meta.url));
 
 test('lab machine accounting includes orchestration machines and peaks at eight', () => {
   assert.deepEqual(validateLab(source.pipeline, source.templates), {
-    maximumConcurrentMachines: 8, concurrentJobs: ['scaled'], machinesPerJob: { mixed: 4, scaled: 8, semantics: 1 },
+    maximumConcurrentMachines: 8, maximumConcurrentNxCloudMachines: 7, reservedGithubRunners: 1,
+    concurrentJobs: ['scaled'], machinesPerJob: { main: 4, mixed: 4, scaled: 7, semantics: 1 },
   });
 });
 
@@ -43,19 +44,32 @@ test('lab rejects zero, one, and two-worker distributed pools', () => {
 
 test('lab rejects wildcard triggers and writable repository tokens', () => {
   let { pipeline, templates } = copy();
-  pipeline.on.experiment.branches = ['**'];
-  assert.throws(() => validateLab(pipeline, templates), /explicit experiment branch/);
+  pipeline.on['pull-requests'].branches = ['**'];
+  assert.throws(() => validateLab(pipeline, templates), /approved PR\/main triggers/);
   ({ pipeline, templates } = copy());
   pipeline.jobs.mixed.permissions = { 'repository-contents': 'write' };
   assert.throws(() => validateLab(pipeline, templates), /writable repository tokens/);
 });
 
+test('chaos jobs are PR-only and must follow the regular Nx job', () => {
+  for (const name of ['mixed', 'scaled', 'semantics']) {
+    const { pipeline, templates } = copy();
+    delete pipeline.jobs[name].if;
+    assert.throws(() => validateLab(pipeline, templates), /must be PR-only/);
+    pipeline.jobs[name].if = 'always()';
+    assert.throws(() => validateLab(pipeline, templates), /must be PR-only/);
+  }
+  const { pipeline, templates } = copy();
+  delete pipeline.jobs.mixed.needs;
+  assert.throws(() => validateLab(pipeline, templates), /follow the regular Nx check/);
+});
+
 test('lab rejects missing dependencies and dependency cycles', () => {
   let { pipeline, templates } = copy();
-  pipeline.jobs.mixed.needs = 'missing';
+  pipeline.jobs.main.needs = 'missing';
   assert.throws(() => validateLab(pipeline, templates), /Unknown job dependency/);
   ({ pipeline, templates } = copy());
-  pipeline.jobs.mixed.needs = 'semantics';
+  pipeline.jobs.main.needs = 'semantics';
   assert.throws(() => validateLab(pipeline, templates), /dependency cycle/);
 });
 
@@ -80,7 +94,7 @@ test('lab rejects shrinking pools and undersized disabled-main-worker setups', (
 test('lab rejects oversized pools and missing assignment destinations', () => {
   let { pipeline, templates } = copy();
   templates.mixed.workers = '8 linux-large-js';
-  assert.throws(() => validateLab(pipeline, templates), /seven additional workers/);
+  assert.throws(() => validateLab(pipeline, templates), /six additional workers/);
   ({ pipeline, templates } = copy());
   templates.mixed.workers = '3 linux-medium-js';
   assert.throws(() => validateLab(pipeline, templates), /routing destination/);

@@ -1,4 +1,4 @@
-# Imported by chaos.yaml; no triggers, so this file does not start a pipeline.
+# Imported by ci.yaml; no triggers, so this file does not start a pipeline.
 mixed:
   workers: 2 linux-medium-js; 1 linux-large-js
   assignment-rules:
@@ -17,8 +17,8 @@ scaled:
     count: 3 linux-medium-js
     workload: 15%
   medium:
-    count: 3 linux-medium-js; 2 linux-large-js
+    count: 3 linux-medium-js; 1 linux-large-js
     workload: 55%
-  large: 4 linux-medium-js; 3 linux-large-js
+  large: 4 linux-medium-js; 2 linux-large-js
   main-job-worker: false
   stop-after: [verify, e2e]

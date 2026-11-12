@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
+triggers:
+  pull-requests:
+    event: PR
+    branches: ['main']
+  pushes:
+    event: PUSH
+    branches: ['main']
+
+workflows:
+  main:
+    runs-on: linux-medium-js
+    # Three additional workers; the main-job worker also executes tasks.
+    workers: 3 linux-large-js
+    steps:
+      - name: Verify affected projects and run integration tests
+        script: |
+          pnpm exec nx affected -t verify,e2e

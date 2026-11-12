@@ -159,7 +159,19 @@ Default size: `sharedLayers × sharedPerLayer + domains × (4 × projectsPerLaye
 
 ## CI
 
-`.github/workflows/ci.yml`:
+### Nx Cloud CI
+
+`.nx/pipelines/ci.yaml` runs on pull requests to `main` and pushes to `main`:
+
+- Uses a `linux-medium-js` main job plus **three `linux-large-js` workers**. The main-job worker also executes tasks: four workers total.
+- Runs `nx affected -t verify,e2e`, covering all seven standard targets plus the integration targets through the existing task graph (up to 3,384 tasks).
+- Uses Nx Cloud's supplied base/head commits and managed worker lifecycle. No manual task sharding or additional `--parallel` override is needed.
+
+The workspace is connected through `nxCloudId` in `nx.json`. Worker counts can be changed in the pipeline's `workers` setting; additional workers consume additional cloud compute. Nx Cloud checks out the repository and installs dependencies through the built-in JS launch templates.
+
+### GitHub Actions
+
+The separate `.github/workflows/ci.yml` remains enabled:
 
 - Installs the locked dependencies on Node 24.
 - Runs the tooling regression tests and exports/validates both graphs.
@@ -168,4 +180,4 @@ Default size: `sharedLayers × sharedPerLayer + domains × (4 × projectsPerLaye
 - Restores/saves local Nx cache using GitHub Actions cache; no Nx Cloud setup required.
 - Uploads graphs and available unit/integration/verification results, including on failure.
 
-The remote is not configured or modified by these scripts. Committing and pushing the workspace activates the workflow; Nx Cloud can be connected separately later if desired.
+Both CI providers currently run for pull requests and pushes to `main`; enabling Nx Cloud CI does not disable GitHub Actions. The scripts do not change the Git remote.

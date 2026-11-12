@@ -159,12 +159,13 @@ Default size: `sharedLayers × sharedPerLayer + domains × (4 × projectsPerLaye
 
 ## Bounded CI chaos lab
 
-[The chaos lab](docs/CHAOS-LAB.md) exercises Nx Cloud CI itself: mixed worker pools, dynamic sizing, job dependencies, parallel steps, expressions, controlled failures, and timeouts. It runs only for PRs targeting `main`, after the regular Nx check in the same pipeline. The eight-machine scheduling cap includes a reserved slot for the separate GitHub Actions runner; branch pushes do not launch the lab.
+[The chaos lab](docs/CHAOS-LAB.md) exercises Nx Cloud CI itself. **This branch runs a disposable round-02 experiment: cache restoration/invalidation and job-failure propagation. The intended PR result is red; do not merge this pipeline.** It replaces the large shard reruns with a tiny isolated fixture and parallel job branches, bounded at five machines including GitHub (below the approved eight-machine ceiling). Lab commands are PR-only; branch pushes do not launch them. The successful round-01 configuration remains archived outside pipeline discovery.
 
 ```sh
 pnpm chaos:check                 # Offline schema and safety checks
 pnpm chaos:schema                # Fifteen local schema boundary cases
-NX_NO_CLOUD=true pnpm chaos:plan  # Export the two experimental task graphs
+node tools/chaos/cache-lab.mjs    # Local-only cache proof, no Cloud connection
+NX_NO_CLOUD=true pnpm chaos:plan  # Export the archived round-01 shard graphs
 ```
 
 ## CI

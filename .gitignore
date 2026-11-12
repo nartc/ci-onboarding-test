@@ -1,5 +1,6 @@
 node_modules/
-.nx/
+.nx/*
+!.nx/pipelines/
 dist/
 coverage/
 .DS_Store

@@ -10,7 +10,9 @@ triggers:
 workflows:
   main:
     runs-on: linux-medium-js
+    # Three additional workers; the main-job worker also executes tasks.
+    workers: 3 linux-large-js
     steps:
-      - name: Run affected tasks
+      - name: Verify affected projects and run integration tests
         script: |
-          pnpm exec nx affected -t lint test build
+          pnpm exec nx affected -t verify,e2e

@@ -86,11 +86,36 @@ export function validateLab(pipeline, templates) {
   assert.deepEqual(pipeline.on, {
     'pull-requests': { event: 'PR', branches: ['main'] }, pushes: { event: 'PUSH', branches: ['main'] },
   }, 'Only approved PR/main triggers are allowed');
-  for (const name of ['mixed', 'scaled', 'semantics']) {
-    const expected = name === 'semantics' ? "always() && nxcloud.event_name == 'pull_request'" : "nxcloud.event_name == 'pull_request'";
-    assert.equal(pipeline.jobs?.[name]?.if, expected, `${name} must be PR-only`);
+  const round = pipeline.env?.CHAOS_TRIAL;
+  assert.ok(['round-01', 'round-02'].includes(round), 'Unknown lab round');
+  if (round === 'round-01') {
+    for (const name of ['mixed', 'scaled', 'semantics']) {
+      const expected = name === 'semantics' ? "always() && nxcloud.event_name == 'pull_request'" : "nxcloud.event_name == 'pull_request'";
+      assert.equal(pipeline.jobs?.[name]?.if, expected, `${name} must be PR-only`);
+    }
+    assert.equal(pipeline.jobs?.mixed?.needs, 'main', 'Chaos must follow the regular Nx check');
+  } else {
+    const pr = "nxcloud.event_name == 'pull_request'";
+    const conditions = {
+      cache: pr, boom: pr, sibling: pr, default_dependent: pr,
+      explicit_success: `always() && needs.boom.result == 'success' && ${pr}`,
+      failure_handler: `always() && needs.boom.result == 'failure' && ${pr}`,
+      cleanup: `always() && ${pr}`,
+    };
+    const dependencies = { cache: 'main', boom: 'cache', sibling: 'cache', default_dependent: 'boom',
+      explicit_success: 'boom', failure_handler: 'boom',
+      cleanup: ['cache', 'boom', 'sibling', 'default_dependent', 'explicit_success', 'failure_handler'] };
+    assert.deepEqual(Object.keys(pipeline.jobs).sort(), ['main', ...Object.keys(conditions)].sort(), 'Unexpected round-02 job');
+    for (const [name, condition] of Object.entries(conditions)) {
+      const job = pipeline.jobs[name];
+      assert.equal(job.if, condition, `${name} must be PR-only with its approved status guard`);
+      assert.deepEqual(job.needs, dependencies[name], `${name} must follow the approved dependency graph`);
+      assert.equal(job.workers, false, 'Round-02 probes must not launch extra workers');
+      assert.ok(job['timeout-minutes'] <= (name === 'cache' ? 6 : 2), 'Round-02 probe timeout exceeded');
+    }
+    const failure = pipeline.jobs.boom.steps.find(step => step.id === 'expected_failure');
+    assert.ok(failure && failure['continue-on-error'] !== true, 'The intentional failure must not be tolerated');
   }
-  assert.equal(pipeline.jobs?.mixed?.needs, 'main', 'Chaos must follow the regular Nx check');
   assert.ok(!pipeline.triggers && !pipeline.workflows, 'No alternate trigger/job aliases in the active lab');
   assert.deepEqual(pipeline['self-healing'], { 'fix-tasks-patterns': [], 'auto-apply-patterns': [] });
   const jobs = pipeline.jobs;
@@ -149,9 +174,9 @@ export function validateLab(pipeline, templates) {
     concurrentJobs: peakJobs, machinesPerJob: machines };
 }
 
-export async function loadLab() {
+export async function loadLab(pipelinePath = '.nx/pipelines/ci.yaml') {
   return {
-    pipeline: parseYaml(await readFile(path.join(workspace, '.nx/pipelines/ci.yaml'), 'utf8')),
+    pipeline: parseYaml(await readFile(path.join(workspace, pipelinePath), 'utf8')),
     templates: parseYaml(await readFile(path.join(workspace, '.nx/pipelines/chaos-workers.yaml'), 'utf8')),
   };
 }

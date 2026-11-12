@@ -9,7 +9,7 @@ import { loadLab, parseYaml, validateLab } from './chaos/validate.mjs';
 import { runSchemaCases } from './chaos/schema-cases.mjs';
 import { selectProjects } from './chaos/run-shard.mjs';
 
-const source = await loadLab();
+const source = await loadLab('tools/chaos/fixtures/round-01.pipeline.yaml');
 const copy = () => structuredClone(source);
 const probe = fileURLToPath(new URL('./chaos/probes.mjs', import.meta.url));
 

@@ -1,0 +1,126 @@
+# yaml-language-server: $schema=https://cloud.nx.app/nx-cloud/static/schemas/workflow.schema.json
+on:
+  pull-requests:
+    event: PR
+    branches: [main]
+  pushes:
+    event: PUSH
+    branches: [main]
+
+# No automatic fixing of deliberately failing probes.
+self-healing:
+  fix-tasks-patterns: []
+  auto-apply-patterns: []
+
+worker-templates: .nx/pipelines/chaos-workers.yaml
+
+env:
+  NX_CLOUD_AUTO_TASK_PACKING: 'true'
+  CHAOS_SCOPE: workflow
+  CHAOS_TRIAL: round-01
+
+jobs:
+  main:
+    runs-on: linux-medium-js
+    workers: 3 linux-large-js
+    timeout-minutes: 10
+    steps:
+      - name: Verify affected projects and run integration tests
+        script: |
+          pnpm exec nx affected -t verify,e2e
+
+  mixed:
+    needs: main
+    if: nxcloud.event_name == 'pull_request'
+    runs-on: linux-medium-js
+    workers: mixed
+    timeout-minutes: 10
+    steps:
+      - name: Validate the lab contract
+        run: pnpm chaos:check
+      - name: Verify even-domain projects on mixed workers
+        run: node tools/chaos/run-shard.mjs mixed
+
+  scaled:
+    # Six workers + coordinator + the separate GitHub runner = eight machines.
+    needs: mixed
+    if: nxcloud.event_name == 'pull_request'
+    runs-on: linux-medium-js
+    workers: scaled
+    timeout-minutes: 10
+    steps:
+      - name: Validate the lab contract
+        run: pnpm chaos:check
+      - name: Verify odd-domain projects without a main-job worker
+        run: node tools/chaos/run-shard.mjs scaled
+
+  semantics:
+    needs: [mixed, scaled]
+    if: always() && nxcloud.event_name == 'pull_request'
+    runs-on: linux-medium-js
+    workers: false
+    timeout-minutes: 3
+    env:
+      CHAOS_SCOPE: job
+    steps:
+      - name: Start a fresh evidence set
+        run: node tools/chaos/probes.mjs start
+
+      - name: Assert dependency results
+        env:
+          MIXED_RESULT: ${{ needs.mixed.result }}
+          SCALED_RESULT: ${{ needs.scaled.result }}
+        run: node tools/chaos/probes.mjs dependencies
+
+      - name: Check environment precedence and publish outputs
+        id: outputs
+        env:
+          CHAOS_SCOPE: step
+          EXPRESSION_SCOPE: ${{ env.CHAOS_SCOPE }}
+        run: node tools/chaos/probes.mjs outputs
+
+      - name: Intentional exit 17, tolerated
+        id: expected_failure
+        continue-on-error: true
+        run: node tools/chaos/probes.mjs fail
+
+      - name: Failure status must not follow a tolerated failure
+        if: failure()
+        run: node tools/chaos/probes.mjs forbidden
+
+      - name: Explicit success after the tolerated failure
+        if: success()
+        run: node tools/chaos/probes.mjs success
+
+      - name: A false expression must skip this step
+        if: contains(fromJSON('["nope"]'), 'run-me')
+        run: node tools/chaos/probes.mjs forbidden
+
+      - group-name: Parallel rendezvous
+        parallel: true
+        steps:
+          - name: Left participant
+            run: node tools/chaos/probes.mjs parallel left
+          - name: Right participant
+            run: node tools/chaos/probes.mjs parallel right
+
+      - name: Intentional six-second step timeout, tolerated
+        id: expected_timeout
+        timeout-minutes: 0.1
+        continue-on-error: true
+        run: node tools/chaos/probes.mjs timeout
+
+      - name: Assert observed semantics, not just a green status
+        if: always()
+        env:
+          FAILURE_OUTCOME: ${{ steps.expected_failure.outcome }}
+          FAILURE_CONCLUSION: ${{ steps.expected_failure.conclusion }}
+          TIMEOUT_OUTCOME: ${{ steps.expected_timeout.outcome }}
+          TIMEOUT_CONCLUSION: ${{ steps.expected_timeout.conclusion }}
+          OUTPUT_TOKEN: ${{ steps.outputs.outputs.token }}
+          OUTPUT_NUMBER: ${{ fromJSON(steps.outputs.outputs.payload).answer }}
+        run: node tools/chaos/probes.mjs verify
+
+      - name: Record evidence even on failure
+        if: always()
+        run: node tools/chaos/probes.mjs report
